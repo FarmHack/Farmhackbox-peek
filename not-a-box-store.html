@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not a Box Store — Open Box Network</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --farm-hack-orange: #E85D04;
+            --farm-hack-brown: #8B4513;
+            --openteam-blue: #2563EB;
+            --goat-green: #059669;
+            --earth-brown: #78350F;
+            --soil-dark: #1C1917;
+            --cream: #FEFCE8;
+            --warm-gray: #F5F5F4;
+            --text-primary: #1C1917;
+            --text-secondary: #57534E;
+            --accent-gold: #D97706;
+            --holochain-cyan: #06B6D4;
+            --giaa-green: #4D7C0F;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--warm-gray);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Icon base styles */
+        .icon {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .icon-lg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .icon-xl {
+            width: 64px;
+            height: 64px;
+        }
+
+        /* Header */
+        header {
+            background: var(--soil-dark);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .logo .icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--farm-hack-orange);
+        }
+
+        .nav-cta {
+            background: var(--farm-hack-orange);
+            color: white !important;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-cta:hover {
+            background: #D54A00 !important;
+            color: white !important;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--soil-dark) 0%, #292524 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            color: var(--farm-hack-orange);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.8);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .btn-primary {
+            background: var(--farm-hack-orange);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #D54A00;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: white;
+            padding: 2rem;
+            border-bottom: 1px solid #E7E5E4;
+        }
+
+        .stats-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--farm-hack-orange);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--soil-dark);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Box Types Grid */
+        .box-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .box-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .box-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .box-card-header {
+            padding: 2rem;
+            color: white;
+            position: relative;
+        }
+
+        .box-card-header.farm-hack {
+            background: linear-gradient(135deg, var(--farm-hack-orange), var(--farm-hack-brown));
+        }
+
+        .box-card-header.library {
+            background: linear-gradient(135deg, var(--openteam-blue), #1E40AF);
+        }
+
+        .box-card-header.civic {
+            background: linear-gradient(135deg, var(--goat-green), #047857);
+        }
+
+        .box-card-header.science {
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+        }
+
+        .box-card-header.maker {
+            background: linear-gradient(135deg, var(--accent-gold), #B45309);
+        }
+
+        .box-card-header.learning {
+            background: linear-gradient(135deg, var(--holochain-cyan), #0891B2);
+        }
+
+        .box-icon {
+            margin-bottom: 1rem;
+        }
+
+        .box-icon .icon {
+            width: 48px;
+            height: 48px;
+            stroke-width: 1.5;
+        }
+
+        .box-card-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .box-card-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .box-card-body {
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .box-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .box-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .box-features li .icon {
+            width: 18px;
+            height: 18px;
+            color: var(--goat-green);
+            flex-shrink: 0;
+        }
+
+        .box-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-preview {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .status-coming {
+            background: #E0E7FF;
+            color: #3730A3;
+        }
+
+        /* Build Event Section */
+        .build-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .build-phases {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .phase {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: var(--warm-gray);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .phase-number {
+            width: 60px;
+            height: 60px;
+            background: var(--farm-hack-orange);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .phase-content h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--soil-dark);
+        }
+
+        .phase-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .phase-details {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* BOM Table */
+        .bom-section {
+            margin-top: 3rem;
+        }
+
+        .bom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .bom-table th,
+        .bom-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #E7E5E4;
+        }
+
+        .bom-table th {
+            background: var(--soil-dark);
+            color: white;
+            font-weight: 600;
+        }
+
+        .bom-table tr:hover {
+            background: var(--warm-gray);
+        }
+
+        .bom-total {
+            font-weight: 700;
+            background: #FEF3C7 !important;
+        }
+
+        .bom-total td {
+            color: var(--earth-brown);
+        }
+
+        /* Sponsor Section */
+        .sponsor-section {
+            background: linear-gradient(135deg, var(--soil-dark), #292524);
+            color: white;
+            border-radius: 20px;
+            padding: 3rem;
+        }
+
+        .sponsor-section h2 {
+            color: white;
+        }
+
+        .sponsor-section .section-header p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .pool-progress {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .pool-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .pool-amount {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--farm-hack-orange);
+        }
+
+        .pool-goal {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--farm-hack-orange), var(--accent-gold));
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .pool-info {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .gift-tiers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tier-card {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .tier-card:hover {
+            border-color: var(--farm-hack-orange);
+            transform: translateY(-3px);
+        }
+
+        .tier-card.featured {
+            border-color: var(--farm-hack-orange);
+            background: rgba(232, 93, 4, 0.1);
+        }
+
+        .tier-icon {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .tier-icon .icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .tier-price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--farm-hack-orange);
+        }
+
+        .tier-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .tier-desc {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tier-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* Partners Section */
+        .partners-section {
+            text-align: center;
+        }
+
+        .partner-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            align-items: center;
+        }
+
+        .partner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+            text-decoration: none;
+        }
+
+        .partner:hover {
+            opacity: 1;
+        }
+
+        .partner-logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .partner-logo-text .icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .partner-logo-text.farm-hack { color: var(--farm-hack-orange); }
+        .partner-logo-text.openteam { color: var(--openteam-blue); }
+        .partner-logo-text.goat { color: var(--goat-green); }
+        .partner-logo-text.oedp { color: #7C3AED; }
+        .partner-logo-text.css { color: #EC4899; }
+        .partner-logo-text.raft { color: var(--earth-brown); }
+        .partner-logo-text.holochain { color: var(--holochain-cyan); }
+        .partner-logo-text.giaa { color: var(--giaa-green); }
+
+        .partner-name {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .partner-cta {
+            background: var(--warm-gray);
+            border: 2px dashed #D6D3D1;
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .partner-cta:hover {
+            border-color: var(--farm-hack-orange);
+            background: #FEF3C7;
+        }
+
+        .partner-cta .icon {
+            width: 32px;
+            height: 32px;
+            color: var(--text-secondary);
+        }
+
+        /* Events Section */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .event-header {
+            background: var(--farm-hack-orange);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .event-date {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .event-type {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .event-body {
+            padding: 1.5rem;
+        }
+
+        .event-body h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .event-body p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .event-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .event-location .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Page Views */
+        .page-view {
+            display: none;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--soil-dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: var(--farm-hack-orange);
+        }
+
+        .footer-section a {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            padding: 0.3rem 0;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .mobile-menu { display: block; }
+            nav.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--soil-dark);
+                padding: 1rem 2rem 2rem;
+                gap: 1rem;
+            }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .box-grid { grid-template-columns: 1fr; }
+            .phase {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .phase-number { margin: 0 auto; }
+            .bom-table { font-size: 0.85rem; }
+            .bom-table th, .bom-table td { padding: 0.75rem 0.5rem; }
+        }
+
+        /* Box Detail View */
+        .box-detail {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .box-detail-header {
+            padding: 3rem;
+            color: white;
+        }
+
+        .box-detail-header.farm-hack { background: linear-gradient(135deg, var(--farm-hack-orange), var(--farm-hack-brown)); }
+        .box-detail-header.library { background: linear-gradient(135deg, var(--openteam-blue), #1E40AF); }
+        .box-detail-header.civic { background: linear-gradient(135deg, var(--goat-green), #047857); }
+
+        .box-detail-body {
+            padding: 3rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover { color: white; }
+        .back-link .icon { width: 16px; height: 16px; }
+
+        .software-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .software-item {
+            background: var(--warm-gray);
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .software-item .icon {
+            width: 28px;
+            height: 28px;
+            color: var(--farm-hack-orange);
+            flex-shrink: 0;
+        }
+
+        .software-name { font-weight: 600; }
+        .software-desc { font-size: 0.85rem; color: var(--text-secondary); }
+
+        .detail-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-title .icon {
+            width: 48px;
+            height: 48px;
+        }
+    </style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🌾%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/peek.css">
+<script src="assets/peek.js" defer></script>
+</head>
+<body data-peek="network">
+    <!-- SVG Icon Definitions - Single stroke, single color -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <defs>
+            <symbol id="icon-box" viewBox="0 0 24 24">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z M3.27 6.96 12 12.01l8.73-5.05 M12 22.08V12"/>
+            </symbol>
+            <symbol id="icon-wrench" viewBox="0 0 24 24">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </symbol>
+            <symbol id="icon-wheat" viewBox="0 0 24 24">
+                <path d="M2 22 16 8 M6 18l-2-2 M10 14l-2-2 M14 10l-2-2 M17 3c0 3-2 5-5 5 M22 3c-3 0-5 2-5 5"/>
+            </symbol>
+            <symbol id="icon-book" viewBox="0 0 24 24">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+            </symbol>
+            <symbol id="icon-building" viewBox="0 0 24 24">
+                <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18 M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2 M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2 M10 6h4 M10 10h4 M10 14h4 M10 18h4"/>
+            </symbol>
+            <symbol id="icon-flask" viewBox="0 0 24 24">
+                <path d="M9 3h6 M10 3v6l-5 8.5a2 2 0 0 0 1.7 3.5h10.6a2 2 0 0 0 1.7-3.5L14 9V3"/>
+            </symbol>
+            <symbol id="icon-hammer" viewBox="0 0 24 24">
+                <path d="m15 12-8.5 8.5a2.12 2.12 0 1 1-3-3L12 9 M17.64 15 22 10.64 M20.91 11.7l-1.25-1.25a3 3 0 0 1-.93-2.18V6.5L16 4a4 4 0 0 0-3-1h-1l1 1a4 4 0 0 1 1 2.82V9l2 2h2l2.91 2.7"/>
+            </symbol>
+            <symbol id="icon-graduation" viewBox="0 0 24 24">
+                <path d="M22 10v6 M2 10l10-5 10 5-10 5z M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
+            </symbol>
+            <symbol id="icon-heart" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </symbol>
+            <symbol id="icon-check" viewBox="0 0 24 24">
+                <path d="M20 6 9 17l-5-5"/>
+            </symbol>
+            <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+                <path d="M5 12h14m-7-7 7 7-7 7"/>
+            </symbol>
+            <symbol id="icon-arrow-left" viewBox="0 0 24 24">
+                <path d="m12 19-7-7 7-7 M19 12H5"/>
+            </symbol>
+            <symbol id="icon-map-pin" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 7v6"/>
+            </symbol>
+            <symbol id="icon-plus" viewBox="0 0 24 24">
+                <path d="M12 5v14 M5 12h14"/>
+            </symbol>
+            <symbol id="icon-globe" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20 M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </symbol>
+            <symbol id="icon-seedling" viewBox="0 0 24 24">
+                <path d="M12 22V12 M7 8.5C3 8.5 3 14 7 14h5 M17 8.5c4 0 4 5.5 0 5.5h-5 M12 12V8a4 4 0 0 1 4-4"/>
+            </symbol>
+            <symbol id="icon-target" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="6"/>
+                <circle cx="12" cy="12" r="2"/>
+            </symbol>
+            <symbol id="icon-git-branch" viewBox="0 0 24 24">
+                <path d="M6 3v12 M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M18 9a9 9 0 0 1-9 9"/>
+            </symbol>
+            <symbol id="icon-database" viewBox="0 0 24 24">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M21 5v14a9 3 0 0 1-18 0V5 M3 12a9 3 0 0 0 18 0"/>
+            </symbol>
+            <symbol id="icon-shield" viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </symbol>
+            <symbol id="icon-server" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="8" rx="2"/>
+                <rect x="2" y="14" width="20" height="8" rx="2"/>
+                <path d="M6 6h.01 M6 18h.01"/>
+            </symbol>
+            <symbol id="icon-hard-drive" viewBox="0 0 24 24">
+                <path d="M22 12H2 M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z M6 16h.01 M10 16h.01"/>
+            </symbol>
+            <symbol id="icon-workflow" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="8" height="8" rx="2"/>
+                <rect x="13" y="13" width="8" height="8" rx="2"/>
+                <path d="M7 11v2a2 2 0 0 0 2 2h4"/>
+            </symbol>
+            <symbol id="icon-users" viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75"/>
+            </symbol>
+            <symbol id="icon-menu" viewBox="0 0 24 24">
+                <path d="M4 12h16 M4 6h16 M4 18h16"/>
+            </symbol>
+            <symbol id="icon-circle" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+            </symbol>
+            <symbol id="icon-anchor" viewBox="0 0 24 24">
+                <circle cx="12" cy="5" r="3"/>
+                <path d="M12 22V8 M5 12H2a10 10 0 0 0 20 0h-3"/>
+            </symbol>
+            <symbol id="icon-leaf" viewBox="0 0 24 24">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+            </symbol>
+            <symbol id="icon-bar-chart" viewBox="0 0 24 24">
+                <path d="M12 20V10 M18 20V4 M6 20v-4"/>
+            </symbol>
+            <symbol id="icon-map" viewBox="0 0 24 24">
+                <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z M9 3v15 M15 6v15"/>
+            </symbol>
+            <symbol id="icon-thermometer" viewBox="0 0 24 24">
+                <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0z"/>
+            </symbol>
+            <symbol id="icon-clipboard" viewBox="0 0 24 24">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                <rect x="8" y="2" width="8" height="4" rx="1"/>
+            </symbol>
+        </defs>
+    </svg>
+
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="navigate('home')">
+                <svg class="icon"><use href="#icon-box"/></svg>
+                Not a Box Store
+            </div>
+            <nav id="mainNav">
+                <a href="#" onclick="navigate('home'); return false;" class="active">Home</a>
+                <a href="#" onclick="navigate('boxes'); return false;">Box Types</a>
+                <a href="#" onclick="navigate('build'); return false;">Build Event</a>
+                <a href="#" onclick="navigate('sponsor'); return false;">Sponsor</a>
+                <a href="#" onclick="navigate('partners'); return false;">Partners</a>
+                <a href="index.html" class="nav-cta">
+                    Farm Hack Box
+                    <svg class="icon" style="width:16px;height:16px;"><use href="#icon-arrow-right"/></svg>
+                </a>
+            </nav>
+            <button class="mobile-menu" onclick="toggleMobileMenu()">
+                <svg class="icon"><use href="#icon-menu"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- HOME PAGE -->
+    <div id="page-home" class="page-view active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>This is <span>Not</span> a Box Store</h1>
+                <p>Self-hosted, community-owned infrastructure for the commons. A distributed network of open hardware and software serving farms, libraries, makerspaces, and civic organizations.</p>
+                <div class="hero-buttons">
+                    <a href="#" onclick="navigate('build'); return false;" class="btn btn-primary">
+                        <svg class="icon"><use href="#icon-wrench"/></svg>
+                        Build Your Own
+                    </a>
+                    <a href="index.html" class="btn btn-secondary">
+                        <svg class="icon"><use href="#icon-wheat"/></svg>
+                        Farm Hack Box
+                    </a>
+                    <a href="#" onclick="navigate('sponsor'); return false;" class="btn btn-secondary">
+                        <svg class="icon"><use href="#icon-heart"/></svg>
+                        Sponsor a Box
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="stats-bar">
+            <div class="stats-content" id="liveStats">
+                <div class="stat"><div class="stat-number" id="stat-tools">--</div><div class="stat-label">Open Tools</div></div>
+                <div class="stat"><div class="stat-number" id="stat-projects">--</div><div class="stat-label">Projects</div></div>
+                <div class="stat"><div class="stat-number" id="stat-datasets">--</div><div class="stat-label">Datasets</div></div>
+                <div class="stat"><div class="stat-number" id="stat-orgs">--</div><div class="stat-label">Organizations</div></div>
+                <div class="stat"><div class="stat-number" id="stat-boxes">7</div><div class="stat-label">Active Boxes</div></div>
+            </div>
+        </div>
+
+        <main>
+            <section>
+                <div class="section-header">
+                    <h2>Choose Your Box</h2>
+                    <p>Pre-configured open infrastructure for different communities. Each box is fully customizable and inter-operable.</p>
+                </div>
+
+                <div class="box-grid">
+                    <div class="box-card" onclick="navigate('box-farm')">
+                        <div class="box-card-header farm-hack">
+                            <div class="box-icon"><svg class="icon icon-lg"><use href="#icon-wheat"/></svg></div>
+                            <h3>Farm Hack Box</h3>
+                            <p>The original. Open source tools for resilient agriculture.</p>
+                        </div>
+                        <div class="box-card-body">
+                            <ul class="box-features">
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Forgejo git hosting & CI/CD</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Commons Registry with 200+ farm tools</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Equipment library & seed sharing</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Offline-first documentation</li>
+                            </ul>
+                            <span class="box-status status-active">Reference Design</span>
+                        </div>
+                    </div>
+
+                    <div class="box-card" onclick="navigate('box-library')">
+                        <div class="box-card-header library">
+                            <div class="box-icon"><svg class="icon icon-lg"><use href="#icon-book"/></svg></div>
+                            <h3>Library Box</h3>
+                            <p>Offline knowledge commons for libraries and schools.</p>
+                        </div>
+                        <div class="box-card-body">
+                            <ul class="box-features">
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Kiwix offline Wikipedia & OpenStax</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Kolibri educational content</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Digital lending system</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Community archival tools</li>
+                            </ul>
+                            <span class="box-status status-preview">In Development</span>
+                        </div>
+                    </div>
+
+                    <div class="box-card" onclick="navigate('box-civic')">
+                        <div class="box-card-header civic">
+                            <div class="box-icon"><svg class="icon icon-lg"><use href="#icon-building"/></svg></div>
+                            <h3>Civic Data Box</h3>
+                            <p>Open data infrastructure for community organizations.</p>
+                        </div>
+                        <div class="box-card-body">
+                            <ul class="box-features">
+                                <li><svg class="icon"><use href="#icon-check"/></svg>OEDP governance tools</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>GIS & environmental monitoring</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Community asset mapping</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Public data dashboards</li>
+                            </ul>
+                            <span class="box-status status-preview">In Development</span>
+                        </div>
+                    </div>
+
+                    <div class="box-card">
+                        <div class="box-card-header science">
+                            <div class="box-icon"><svg class="icon icon-lg"><use href="#icon-flask"/></svg></div>
+                            <h3>Open Science Box</h3>
+                            <p>Citizen science and research data commons.</p>
+                        </div>
+                        <div class="box-card-body">
+                            <ul class="box-features">
+                                <li><svg class="icon"><use href="#icon-check"/></svg>JupyterHub notebooks</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Sensor data aggregation</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Research collaboration</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Preprint hosting</li>
+                            </ul>
+                            <span class="box-status status-coming">Coming 2027</span>
+                        </div>
+                    </div>
+
+                    <div class="box-card">
+                        <div class="box-card-header maker">
+                            <div class="box-icon"><svg class="icon icon-lg"><use href="#icon-hammer"/></svg></div>
+                            <h3>Maker Lab Box</h3>
+                            <p>Digital fabrication and repair documentation.</p>
+                        </div>
+                        <div class="box-card-body">
+                            <ul class="box-features">
+                                <li><svg class="icon"><use href="#icon-check"/></svg>DocuBricks hardware docs</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>3D print file library</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Repair café toolkit</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Tool lending integration</li>
+                            </ul>
+                            <span class="box-status status-coming">Coming 2027</span>
+                        </div>
+                    </div>
+
+                    <div class="box-card">
+                        <div class="box-card-header learning">
+                            <div class="box-icon"><svg class="icon icon-lg"><use href="#icon-graduation"/></svg></div>
+                            <h3>Learning Commons Box</h3>
+                            <p>Distributed education for underserved communities.</p>
+                        </div>
+                        <div class="box-card-body">
+                            <ul class="box-features">
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Course management (Moodle)</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Video streaming (PeerTube)</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Study group coordination</li>
+                                <li><svg class="icon"><use href="#icon-check"/></svg>Credential verification</li>
+                            </ul>
+                            <span class="box-status status-coming">Coming 2027</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="events-section">
+                <div class="section-header">
+                    <h2>Upcoming Build Events</h2>
+                    <p>Join us to build boxes together — no experience required.</p>
+                </div>
+
+                <div class="events-grid">
+                    <div class="event-card">
+                        <div class="event-header">
+                            <span class="event-date">July 8-12, 2026</span>
+                            <span class="event-type">Build Party</span>
+                        </div>
+                        <div class="event-body">
+                            <h4>DWeb Camp 2026</h4>
+                            <p>Build your first Farm Hack Box at our hands-on workshop during the decentralized web gathering.</p>
+                            <div class="event-location"><svg class="icon"><use href="#icon-map-pin"/></svg>Alte Hölle, Germany</div>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-header" style="background: var(--openteam-blue);">
+                            <span class="event-date">August 2026</span>
+                            <span class="event-type">Workshop</span>
+                        </div>
+                        <div class="event-body">
+                            <h4>Library Box Sprint</h4>
+                            <p>Partner with your local library to deploy offline knowledge infrastructure.</p>
+                            <div class="event-location"><svg class="icon"><use href="#icon-map-pin"/></svg>Virtual + Regional Hubs</div>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-header" style="background: var(--goat-green);">
+                            <span class="event-date">Fall 2026</span>
+                            <span class="event-type">Pilot</span>
+                        </div>
+                        <div class="event-body">
+                            <h4>10-Node Pilot Network</h4>
+                            <p>First federated deployment across farms, libraries, and community spaces.</p>
+                            <div class="event-location"><svg class="icon"><use href="#icon-map-pin"/></svg>Northeast USA</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- BOX TYPES PAGE -->
+    <div id="page-boxes" class="page-view">
+        <main>
+            <div class="section-header" style="margin-top: 2rem;">
+                <h2>All Box Types</h2>
+                <p>Each box is a complete, self-contained infrastructure package that can operate independently or as part of the Open Box Network.</p>
+            </div>
+            <div class="box-grid">
+                <div class="box-card" onclick="navigate('box-farm')">
+                    <div class="box-card-header farm-hack"><div class="box-icon"><svg class="icon icon-lg"><use href="#icon-wheat"/></svg></div><h3>Farm Hack Box</h3><p>The original. Open source tools for resilient agriculture.</p></div>
+                    <div class="box-card-body"><ul class="box-features"><li><svg class="icon"><use href="#icon-check"/></svg>Forgejo git hosting & CI/CD</li><li><svg class="icon"><use href="#icon-check"/></svg>Commons Registry with 200+ farm tools</li><li><svg class="icon"><use href="#icon-check"/></svg>Equipment library & seed sharing</li><li><svg class="icon"><use href="#icon-check"/></svg>Offline-first documentation</li></ul><span class="box-status status-active">Reference Design</span></div>
+                </div>
+                <div class="box-card" onclick="navigate('box-library')">
+                    <div class="box-card-header library"><div class="box-icon"><svg class="icon icon-lg"><use href="#icon-book"/></svg></div><h3>Library Box</h3><p>Offline knowledge commons for libraries and schools.</p></div>
+                    <div class="box-card-body"><ul class="box-features"><li><svg class="icon"><use href="#icon-check"/></svg>Kiwix offline Wikipedia & OpenStax</li><li><svg class="icon"><use href="#icon-check"/></svg>Kolibri educational content</li><li><svg class="icon"><use href="#icon-check"/></svg>Digital lending system</li><li><svg class="icon"><use href="#icon-check"/></svg>Community archival tools</li></ul><span class="box-status status-preview">In Development</span></div>
+                </div>
+                <div class="box-card" onclick="navigate('box-civic')">
+                    <div class="box-card-header civic"><div class="box-icon"><svg class="icon icon-lg"><use href="#icon-building"/></svg></div><h3>Civic Data Box</h3><p>Open data infrastructure for community organizations.</p></div>
+                    <div class="box-card-body"><ul class="box-features"><li><svg class="icon"><use href="#icon-check"/></svg>OEDP governance tools</li><li><svg class="icon"><use href="#icon-check"/></svg>GIS & environmental monitoring</li><li><svg class="icon"><use href="#icon-check"/></svg>Community asset mapping</li><li><svg class="icon"><use href="#icon-check"/></svg>Public data dashboards</li></ul><span class="box-status status-preview">In Development</span></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FARM HACK BOX DETAIL -->
+    <div id="page-box-farm" class="page-view">
+        <main>
+            <div class="box-detail">
+                <div class="box-detail-header farm-hack">
+                    <a href="#" onclick="navigate('home'); return false;" class="back-link"><svg class="icon"><use href="#icon-arrow-left"/></svg>Back to all boxes</a>
+                    <h1 class="detail-title"><svg class="icon"><use href="#icon-wheat"/></svg>Farm Hack Box</h1>
+                    <p style="font-size: 1.2rem; opacity: 0.9;">The reference implementation for agricultural commons infrastructure</p>
+                </div>
+                <div class="box-detail-body">
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">The Farm Hack Box is the original open infrastructure node, designed for farms, food hubs, and agricultural cooperatives. It hosts the Commons Registry — a federated catalog of open source tools, datasets, and documentation for resilient agriculture.</p>
+                    <h3>Software Stack</h3>
+                    <div class="software-stack">
+                        <div class="software-item"><svg class="icon"><use href="#icon-git-branch"/></svg><div><div class="software-name">Forgejo 8</div><div class="software-desc">Git hosting & Actions CI</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-workflow"/></svg><div><div class="software-name">Woodpecker CI</div><div class="software-desc">Lightweight CI/CD</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-database"/></svg><div><div class="software-name">PostgreSQL 16</div><div class="software-desc">Relational database</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-shield"/></svg><div><div class="software-name">Caddy</div><div class="software-desc">Auto-TLS reverse proxy</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-box"/></svg><div><div class="software-name">Commons Registry</div><div class="software-desc">Tool & resource catalog</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-hard-drive"/></svg><div><div class="software-name">Restic + B2</div><div class="software-desc">Encrypted backups</div></div></div>
+                    </div>
+                    <h3 style="margin-top: 2rem;">Peek inside</h3>
+                        <p style="margin: .5rem 0 0;">See the <a href="canon.html" style="color: var(--farm-hack-orange); font-weight:600;">canonical texts and launch menu</a>, the <a href="agroecology.html" style="color: var(--farm-hack-orange); font-weight:600;">agroecology orientation</a>, and the <a href="pos.html" style="color: var(--farm-hack-orange); font-weight:600;">Farm Hack POS</a>.</p>
+                        <h3 style="margin-top: 2rem;">Get Started</h3>
+                    <div class="hero-buttons" style="justify-content: flex-start; margin-top: 1rem;">
+                        <a href="index.html" class="btn btn-primary">View Live Demo<svg class="icon"><use href="#icon-arrow-right"/></svg></a>
+                        <a href="#" onclick="navigate('build'); return false;" class="btn btn-secondary" style="background: var(--warm-gray); color: var(--text-primary); border-color: #D6D3D1;"><svg class="icon" style="color: var(--text-primary);"><use href="#icon-wrench"/></svg>Build Instructions</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- LIBRARY BOX DETAIL -->
+    <div id="page-box-library" class="page-view">
+        <main>
+            <div class="box-detail">
+                <div class="box-detail-header library">
+                    <a href="#" onclick="navigate('home'); return false;" class="back-link"><svg class="icon"><use href="#icon-arrow-left"/></svg>Back to all boxes</a>
+                    <h1 class="detail-title"><svg class="icon"><use href="#icon-book"/></svg>Library Box</h1>
+                    <p style="font-size: 1.2rem; opacity: 0.9;">Offline knowledge commons for libraries, schools, and community centers</p>
+                </div>
+                <div class="box-detail-body">
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">The Library Box brings the world's knowledge to communities with limited connectivity. It serves offline Wikipedia, educational content, and digital lending — transforming any space into an information commons.</p>
+                    <h3>Software Stack</h3>
+                    <div class="software-stack">
+                        <div class="software-item"><svg class="icon"><use href="#icon-globe"/></svg><div><div class="software-name">Kiwix</div><div class="software-desc">Offline Wikipedia & more</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-graduation"/></svg><div><div class="software-name">Kolibri</div><div class="software-desc">Educational content platform</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-book"/></svg><div><div class="software-name">Calibre-Web</div><div class="software-desc">E-book management</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-server"/></svg><div><div class="software-name">ArchiveBox</div><div class="software-desc">Community web archiving</div></div></div>
+                    </div>
+                    <div style="background: #FEF3C7; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;"><strong>In Development</strong><br>The Library Box is currently being designed with input from rural libraries and community centers. Join the development at <a href="#" data-peek-soon="Library Box repository" style="color: var(--openteam-blue);">git.farmhack.community/openteam/library-box</a></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- CIVIC DATA BOX DETAIL -->
+    <div id="page-box-civic" class="page-view">
+        <main>
+            <div class="box-detail">
+                <div class="box-detail-header civic">
+                    <a href="#" onclick="navigate('home'); return false;" class="back-link"><svg class="icon"><use href="#icon-arrow-left"/></svg>Back to all boxes</a>
+                    <h1 class="detail-title"><svg class="icon"><use href="#icon-building"/></svg>Civic Data Box</h1>
+                    <p style="font-size: 1.2rem; opacity: 0.9;">Open data infrastructure for community governance and environmental monitoring</p>
+                </div>
+                <div class="box-detail-body">
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">The Civic Data Box empowers communities to collect, analyze, and publish their own data. Built in partnership with OEDP and GOAT, it provides tools for participatory governance and environmental stewardship.</p>
+                    <h3>Software Stack</h3>
+                    <div class="software-stack">
+                        <div class="software-item"><svg class="icon"><use href="#icon-map"/></svg><div><div class="software-name">QGIS Server</div><div class="software-desc">GIS mapping & analysis</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-bar-chart"/></svg><div><div class="software-name">Metabase</div><div class="software-desc">Data dashboards</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-thermometer"/></svg><div><div class="software-name">InfluxDB</div><div class="software-desc">Sensor data storage</div></div></div>
+                        <div class="software-item"><svg class="icon"><use href="#icon-clipboard"/></svg><div><div class="software-name">ODK Central</div><div class="software-desc">Mobile data collection</div></div></div>
+                    </div>
+                    <div style="background: #FEF3C7; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;"><strong>In Development</strong><br>The Civic Data Box is being co-designed with OEDP and community partners. Pilot deployments planned for Fall 2026.</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- BUILD EVENT PAGE -->
+    <div id="page-build" class="page-view">
+        <main>
+            <section class="build-section">
+                <div class="section-header">
+                    <h2><svg class="icon" style="width:32px;height:32px;"><use href="#icon-wrench"/></svg>Build Your Own Box</h2>
+                    <p>Everything you need to assemble open infrastructure for your community — no experience required.</p>
+                </div>
+                <div class="build-phases">
+                    <div class="phase"><div class="phase-number">1</div><div class="phase-content"><h4>Gather Your Hardware</h4><p>Source the components below. Total cost is typically $250-300. All parts are off-the-shelf and globally available.</p><div class="phase-details">See Bill of Materials below ↓</div></div></div>
+                    <div class="phase"><div class="phase-number">2</div><div class="phase-content"><h4>Flash the Boot Media</h4><p>Download our pre-configured image and flash it to your NVMe SSD or SD card using the Raspberry Pi Imager.</p><div class="phase-details"><code>wget https://box.farmhack.community/images/farmhack-box-v1.img.xz</code><br><code>xzcat farmhack-box-v1.img.xz | sudo dd of=/dev/nvme0n1 bs=4M status=progress</code></div></div></div>
+                    <div class="phase"><div class="phase-number">3</div><div class="phase-content"><h4>Assemble the Hardware</h4><p>Connect the NVMe HAT, attach the RFID reader, and mount in the enclosure. No soldering required.</p><div class="phase-details">Pi 5 → NVMe HAT (M.2 slot) → SSD<br>Pi 5 GPIO → RC522 RFID Reader (SPI pins)<br>Enclosure → Mount standoffs → Close</div></div></div>
+                    <div class="phase"><div class="phase-number">4</div><div class="phase-content"><h4>First Boot Ceremony</h4><p>Power on and complete the setup wizard. Name your box, connect to your network, and join the federation.</p><div class="phase-details">1. Connect Ethernet and power<br>2. Find your box at <code>http://farmhack.local</code><br>3. Create admin account<br>4. Configure domain (optional)<br>5. Tap RFID card to activate (gift economy mode)</div></div></div>
+                    <div class="phase"><div class="phase-number">5</div><div class="phase-content"><h4>Join the Network</h4><p>Your box automatically discovers peers and begins syncing the Commons Registry. You're now part of the Open Box Network!</p><div class="phase-details">✓ Federation JSON published<br>✓ Mirror sync configured<br>✓ Backup schedule active<br>✓ Welcome email sent</div></div></div>
+                </div>
+                <div class="bom-section">
+                    <h3>Bill of Materials</h3>
+                    <table class="bom-table">
+                        <thead><tr><th>Component</th><th>Specification</th><th>Source</th><th>Est. Price</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Raspberry Pi 5</strong></td><td>8GB RAM model</td><td>RPi Foundation / Adafruit / PiShop</td><td>$80</td></tr>
+                            <tr><td><strong>NVMe SSD</strong></td><td>500GB-1TB, M.2 2280</td><td>Amazon / Newegg</td><td>$50-80</td></tr>
+                            <tr><td><strong>NVMe HAT</strong></td><td>PCIe to M.2 for Pi 5</td><td>Pimoroni / Geekworm</td><td>$20</td></tr>
+                            <tr><td><strong>Power Supply</strong></td><td>27W USB-C PD (official)</td><td>RPi Foundation</td><td>$12</td></tr>
+                            <tr><td><strong>Enclosure</strong></td><td>Aluminum case with fan</td><td>Argon / GeeekPi</td><td>$25</td></tr>
+                            <tr><td><strong>RFID Reader</strong></td><td>RC522 13.56MHz (optional)</td><td>AliExpress / Amazon</td><td>$5</td></tr>
+                            <tr><td><strong>RFID Cards</strong></td><td>MIFARE Classic 1K (pack of 10)</td><td>Amazon / AliExpress</td><td>$8</td></tr>
+                            <tr><td><strong>Ethernet Cable</strong></td><td>Cat6, 2m</td><td>Any</td><td>$5</td></tr>
+                            <tr class="bom-total"><td colspan="3"><strong>Total (with RFID)</strong></td><td><strong>$205-255</strong></td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;"><strong>Tip:</strong> The RFID reader is optional but enables the gift economy features for tool libraries and member check-in. For bulk orders (10+ boxes), contact us for discounted component kits.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- SPONSOR PAGE -->
+    <div id="page-sponsor" class="page-view">
+        <main>
+            <section class="sponsor-section">
+                <div class="section-header">
+                    <h2><svg class="icon" style="width:32px;height:32px;color:var(--farm-hack-orange);"><use href="#icon-heart"/></svg>Gift Economy</h2>
+                    <p>Support community infrastructure through pooled resources and direct sponsorship.</p>
+                </div>
+                <div class="pool-progress">
+                    <div class="pool-header"><div><div class="pool-amount">$2,340</div><div class="pool-goal">Community Deployment Pool</div></div><div style="text-align: right;"><div style="font-size: 1.5rem; font-weight: 600;">$3,000</div><div style="color: rgba(255,255,255,0.6);">Next milestone</div></div></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 78%;"></div></div>
+                    <div class="pool-info"><svg class="icon" style="width:16px;height:16px;"><use href="#icon-target"/></svg>10 boxes deployed • Next: Library Box for Greenfield Community Center</div>
+                </div>
+                <h3 style="margin-bottom: 1rem; color: white;">Choose Your Gift</h3>
+                <div class="gift-tiers">
+                    <div class="tier-card"><div class="tier-icon"><svg class="icon icon-lg"><use href="#icon-seedling"/></svg></div><div class="tier-price">$50</div><div class="tier-name">Contributor</div><div class="tier-desc">Support the pool. Your contribution goes directly toward hardware and deployment costs.</div><button class="btn btn-secondary" style="border-color: rgba(255,255,255,0.3);" data-peek-soon="Contribute">Contribute</button></div>
+                    <div class="tier-card featured"><div class="tier-icon"><svg class="icon icon-lg"><use href="#icon-box"/></svg></div><div class="tier-price">$300</div><div class="tier-name">Full Box Sponsor</div><div class="tier-desc">Fund a complete box deployment for a community in need. You'll receive updates and an invite to the setup ceremony.</div><button class="btn btn-primary" data-peek-soon="Sponsor a Box">Sponsor a Box</button></div>
+                    <div class="tier-card"><div class="tier-icon"><svg class="icon icon-lg"><use href="#icon-globe"/></svg></div><div class="tier-price">$1,500</div><div class="tier-name">Network Builder</div><div class="tier-desc">Deploy a 5-node regional network. Includes training workshop, 1 year of support, and federation setup.</div><button class="btn btn-secondary" style="border-color: rgba(255,255,255,0.3);" data-peek-soon="Build a Network">Build a Network</button></div>
+                </div>
+                <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <h3 style="margin-bottom: 1.5rem; color: white;">Distribution Models</h3>
+                    <div class="software-stack">
+                        <div class="software-item" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"><svg class="icon" style="color: white;"><use href="#icon-wrench"/></svg><div><div class="software-name" style="color: white;">Build Your Own</div><div class="software-desc" style="color: rgba(255,255,255,0.7);">Free — Source parts yourself, flash our image, join the network.</div></div></div>
+                        <div class="software-item" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"><svg class="icon" style="color: white;"><use href="#icon-box"/></svg><div><div class="software-name" style="color: white;">Ready to Run</div><div class="software-desc" style="color: rgba(255,255,255,0.7);">$300 — Pre-assembled kit, plug in and go.</div></div></div>
+                        <div class="software-item" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"><svg class="icon" style="color: white;"><use href="#icon-users"/></svg><div><div class="software-name" style="color: white;">Tool Library Model</div><div class="software-desc" style="color: rgba(255,255,255,0.7);">Free to members — Hosted by community orgs, sustained by the gift economy.</div></div></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PARTNERS PAGE -->
+    <div id="page-partners" class="page-view">
+        <main>
+            <section class="partners-section">
+                <div class="section-header"><h2>Network Partners</h2><p>The Open Box Network is built collaboratively by organizations committed to commons-based infrastructure.</p></div>
+                <div class="partner-grid">
+                    <a href="https://farmhack.org" target="_blank" class="partner"><span class="partner-logo-text farm-hack"><svg class="icon"><use href="#icon-wheat"/></svg>Farm Hack</span><span class="partner-name">Open Source Agriculture</span></a>
+                    <a href="https://openteam.community" target="_blank" class="partner"><span class="partner-logo-text openteam"><svg class="icon"><use href="#icon-globe"/></svg>OpenTEAM</span><span class="partner-name">Agricultural Technology</span></a>
+                    <a href="https://goatech.org" target="_blank" class="partner"><span class="partner-logo-text goat"><svg class="icon"><use href="#icon-users"/></svg>GOAT</span><span class="partner-name">Gathering for Open Ag Tech</span></a>
+                    <a href="https://openenvironmentaldata.org" target="_blank" class="partner"><span class="partner-logo-text oedp"><svg class="icon"><use href="#icon-bar-chart"/></svg>OEDP</span><span class="partner-name">Open Environmental Data</span></a>
+                    <a href="https://codeforscience.org" target="_blank" class="partner"><span class="partner-logo-text css"><svg class="icon"><use href="#icon-flask"/></svg>CS&S</span><span class="partner-name">Code for Science & Society</span></a>
+                    <a href="https://www.holochain.org" target="_blank" class="partner"><span class="partner-logo-text holochain"><svg class="icon"><use href="#icon-circle"/></svg>Holochain</span><span class="partner-name">Distributed Applications</span></a>
+                    <div class="partner"><span class="partner-logo-text giaa"><svg class="icon"><use href="#icon-leaf"/></svg>GIAA</span><span class="partner-name">Grassroots Innovation Assembly</span></div>
+                    <a href="https://raftfoundation.org" target="_blank" class="partner"><span class="partner-logo-text raft"><svg class="icon"><use href="#icon-anchor"/></svg>Raft Foundation</span><span class="partner-name">Resilient Systems</span></a>
+                    <div class="partner-cta" onclick="window.open('mailto:hello@farmhack.community?subject=Partnership%20Inquiry', '_blank')"><svg class="icon"><use href="#icon-plus"/></svg><span style="font-weight: 600;">Your Organization?</span><span style="font-size: 0.85rem; color: var(--text-secondary);">Join the network</span></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section"><h4>Open Box Network</h4><p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Community-owned infrastructure for the digital commons.</p></div>
+            <div class="footer-section"><h4>Resources</h4><a href="#" onclick="navigate('build'); return false;">Build Instructions</a><a href="index.html">Farm Hack Box</a><a href="#">Documentation</a><a href="#">Source Code</a></div>
+            <div class="footer-section"><h4>Community</h4><a href="#">Matrix Chat</a><a href="#">Forum</a><a href="#">Newsletter</a><a href="#">Events</a></div>
+            <div class="footer-section"><h4>Connect</h4><a href="mailto:hello@farmhack.community">hello@farmhack.community</a><a href="https://github.com/farmhack" target="_blank">GitHub</a><a href="#">Mastodon</a></div>
+        </div>
+        <div class="footer-bottom"><p>Made with care by communities, for communities. All content is open source.</p><p style="margin-top: 0.5rem;">Part of the <a href="#" style="color: var(--farm-hack-orange);">Commons Toolshed Network</a></p></div>
+    </footer>
+
+    <script>
+        function navigate(page) {
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            const targetPage = document.getElementById('page-' + page);
+            if (targetPage) targetPage.classList.add('active');
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            const navLink = document.querySelector(`nav a[onclick*="'${page}'"]`);
+            if (navLink) navLink.classList.add('active');
+            window.scrollTo(0, 0);
+            document.getElementById('mainNav').classList.remove('open');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mainNav').classList.toggle('open');
+        }
+
+        async function fetchLiveStats() {
+            try {
+                const ctl = new AbortController(); setTimeout(() => ctl.abort(), 4000);
+                const response = await fetch('https://git.farmhack.community/openteam/commons-registry/raw/branch/main/public/api/registry.json', { signal: ctl.signal });
+                if (!response.ok) throw new Error('API unavailable');
+                const data = await response.json();
+                const counts = { tools: 0, projects: 0, datasets: 0, organizations: 0 };
+                if (data.items && Array.isArray(data.items)) {
+                    data.items.forEach(item => {
+                        if (item.type === 'tool') counts.tools++;
+                        else if (item.type === 'project') counts.projects++;
+                        else if (item.type === 'dataset') counts.datasets++;
+                        else if (item.type === 'organization') counts.organizations++;
+                    });
+                }
+                document.getElementById('stat-tools').textContent = counts.tools || '127';
+                document.getElementById('stat-projects').textContent = counts.projects || '43';
+                document.getElementById('stat-datasets').textContent = counts.datasets || '28';
+                document.getElementById('stat-orgs').textContent = counts.organizations || '12';
+            } catch (error) {
+                document.getElementById('stat-tools').textContent = '127';
+                document.getElementById('stat-projects').textContent = '43';
+                document.getElementById('stat-datasets').textContent = '28';
+                document.getElementById('stat-orgs').textContent = '12';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchLiveStats();
+            window.addEventListener('popstate', () => navigate(window.location.hash.slice(1) || 'home'));
+        });
+    </script>
+</body>
+</html>

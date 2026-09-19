@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CGO — Farm Hack Box</title>
+<meta name="description" content="Community Governed Organizations: roles, protocols, tools and ceremonies — and what a Farm Hack Box actually holds for each.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌾%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/peek.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/peek.js" defer></script>
+<style>
+/* ─────────────────────────────────────────────────────────────────────────────
+   CGO surface — a Governance-section sibling to /admin/#/agroecology, laid out
+   as the printed card unfolded: the front (headline, tagline, hero art), the
+   back (four blocks, each a bold statement over a one-line explanation), the
+   Reflections box, and then — below the fold the card cannot have — what this
+   box actually holds for each element.
+
+   WHAT IS BORROWED FROM THE CARD, and what deliberately is not.
+   Borrowed: the earth-tone palette, teal for headers, rounded-corner bordered
+   boxes, the statement-over-explanation pattern from the reference card's back,
+   the boxed Reflections panel, and the generous white space that makes the
+   reference read as an invitation rather than a poster.
+   NOT borrowed: the iconography. The river, corn, pottery and hummingbird on the
+   reference pieces are hand-drawn Indigenous artwork by a named artist. Imitating
+   that style in CSS would be taking the look without the hand or the permission,
+   so the illustration areas here are marked slots, sized and placed where the art
+   belongs, and the only ornament this page draws for itself is a four-colour band
+   that is simply the four elements' own key.
+
+   Type is the canon shelf's serif stack — locally available faces, no web font —
+   because the box is offline-first and a page that needs Google Fonts to look
+   right is a page that looks wrong in a barn.
+   ───────────────────────────────────────────────────────────────────────────── */
+.cgo{
+  --paper:#FAF5EA; --paper-2:#F2E9D8; --card:#FFFDF8;
+  --ink:#241F1A; --ink-soft:#5A5148; --ink-faint:#8B8175;
+  --rule:#DCD0BA;
+  --teal:#14614C; --teal-bright:#1D9E75;
+  --clay:#B5623C; --corn:#CE9A2E; --sage:#6F8F5B; --river:#3C7A9E;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  background:var(--paper);color:var(--ink);
+}
+body:has(.cgo){background:var(--paper,#FAF5EA)}
+.cgo a{color:inherit}
+.cgo .lnk{color:var(--teal)}
+.cgo .t-title,.cgo .t-body,.cgo .t-faint{color:inherit}
+
+/* ── the card, front ── */
+.front{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:32px 30px;position:relative;overflow:hidden}
+.front .eyebrow{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--teal)}
+.front h1{font-family:var(--serif);font-weight:600;font-size:clamp(28px,5vw,46px);line-height:1.02;letter-spacing:-.015em;margin:10px 0 0;max-width:15ch}
+.front .tagline{font-family:var(--serif);font-style:italic;font-size:clamp(16px,2.4vw,21px);color:var(--teal);margin-top:14px}
+.front .lede{font-size:15px;line-height:1.7;color:var(--ink-soft);max-width:56ch;margin-top:16px}
+.front .go{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
+.front .go a{font-size:13px;font-weight:600;text-decoration:none;color:var(--teal);border:1px solid var(--rule);
+  background:var(--paper);border-radius:999px;padding:9px 16px}
+.front .go a:hover{border-color:var(--teal);background:#fff}
+.frontgrid{display:grid;grid-template-columns:1fr 280px;gap:28px;align-items:center}
+@media(max-width:820px){.frontgrid{grid-template-columns:1fr}}
+
+/* the four-colour band: the elements' own key, and the page's only ornament */
+.band{display:flex;height:8px;border-radius:999px;overflow:hidden;margin-bottom:22px}
+.band i{flex:1}
+
+/* artwork — the group's own card pieces, shown whole rather than cropped */
+.art{margin:0}
+.art img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--rule);
+  box-shadow:0 10px 30px rgba(36,31,26,.12);cursor:zoom-in;background:var(--card)}
+.art img:hover{border-color:var(--teal)}
+.art figcaption{margin-top:10px;font-size:12px;line-height:1.55;color:var(--ink-faint);max-width:40ch}
+.art figcaption b{display:block;color:var(--ink-soft);font-weight:600}
+.cardpair{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+@media(max-width:900px){.cardpair{grid-template-columns:1fr}.cardpair .art{max-width:420px}}
+
+/* artwork slots — kept for art that does not exist yet */
+.artslot{border:1.5px dashed var(--rule);border-radius:12px;background:
+  repeating-linear-gradient(135deg,transparent,transparent 9px,rgba(220,208,186,.28) 9px,rgba(220,208,186,.28) 18px);
+  min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:18px;text-align:center}
+.artslot .k{font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+.artslot .t{font-size:12px;color:var(--ink-faint);max-width:26ch;line-height:1.5}
+
+/* ── the card, back: four blocks ── */
+.blocks{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:820px){.blocks{grid-template-columns:1fr 1fr}} /* 2×2 — the back of the card, four blocks */
+.q-card{display:block;background:var(--card);border:1.5px solid var(--rule);border-left:5px solid var(--acc);
+  border-radius:12px;padding:20px 22px;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s}
+.q-card:hover,.q-card:focus-visible{border-color:var(--acc);box-shadow:0 8px 22px rgba(36,31,26,.08);transform:translateY(-2px);outline:none}
+.q-card .top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.q-card h3{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--acc);letter-spacing:-.01em}
+.q-card .n{font:700 10px/1 ui-monospace,Menlo,monospace;color:var(--ink-faint);letter-spacing:.1em}
+.q-card .statement{font-family:var(--serif);font-weight:600;font-size:17px;line-height:1.3;margin-top:12px;color:var(--ink)}
+.q-card .line{font-size:13.5px;line-height:1.6;color:var(--ink-soft);margin-top:6px}
+.q-card .quote{font-size:12.5px;line-height:1.6;color:var(--ink-faint);margin-top:12px;padding-top:12px;border-top:1px solid var(--rule)}
+.q-card .holds{display:flex;align-items:baseline;gap:8px;margin-top:14px}
+.q-card .holds b{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--acc);line-height:1}
+.q-card .holds span{font:600 9.5px/1.3 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
+.cgo .spheres{gap:5px;margin-top:12px}
+.cgo .sph{font-size:10.5px;padding:3px 8px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--ink-soft)}
+.cgo .sph.has{background:rgba(20,97,76,.07);border-color:rgba(20,97,76,.25);color:var(--teal)}
+.cgo .sph.none{background:rgba(206,154,46,.12);border-color:rgba(206,154,46,.4);color:#8a6914}
+
+/* ── Reflections, the card's own panel ── */
+.reflectbox{border:2.5px solid var(--ink);border-radius:14px;padding:24px 26px 26px;background:var(--card);position:relative}
+.reflectbox h2{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--teal);text-align:center;display:flex;
+  align-items:center;justify-content:center;gap:12px}
+.reflectbox h2 i{display:block;width:26px;height:2px;background:var(--teal);opacity:.55}
+.reflectbox ol{margin:18px 0 0;padding-left:22px}
+.reflectbox li{font-size:14.5px;color:var(--ink);line-height:1.75;margin-top:14px;max-width:70ch}
+.reflectbox .hint{margin-top:18px;font-size:12px;color:var(--ink-faint);text-align:center;font-style:italic}
+
+/* ── footer strip, where the card carries logos and a QR ── */
+.cardfoot{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
+  border-top:1px solid var(--rule);padding-top:18px;margin-top:4px}
+@media(max-width:620px){.cardfoot{grid-template-columns:1fr}}
+.cardfoot p{font-size:12.5px;color:var(--ink-faint);line-height:1.6;max-width:62ch}
+.qrslot{width:96px;height:96px;border:1.5px dashed var(--rule);border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font:700 9px/1.3 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:var(--ink-faint);text-align:center}
+
+/* ── element page, in the same hand ── */
+.cgo .card,.cgo .pit,.cgo .weak,.cgo table.mx{background:var(--card)}
+.cgo .card{border-color:var(--rule)}
+.cgo .el-head h1{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--acc);letter-spacing:-.015em}
+.cgo .el-statement{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1.35;margin-top:10px;max-width:34ch}
+.cgo .el-line{font-size:14px;color:var(--ink-soft);margin-top:8px;line-height:1.65;max-width:62ch}
+.cgo .quotedef{font-size:14px;color:var(--ink-soft);line-height:1.7;margin-top:16px;padding-left:14px;border-left:3px solid var(--acc);max-width:66ch}
+.cgo .reflect{border-color:var(--acc)}
+.cgo .reflect p{color:var(--ink);font-family:var(--serif);font-size:16px}
+.cgo .sect-head{border-bottom-color:var(--rule)}
+.cgo .sect-head h2{font-family:var(--serif);font-size:18px;font-weight:600}
+.cgo .divide>*+*{border-top-color:var(--rule)}
+.cgo .nm{font-weight:600}
+.cgo .li{color:var(--ink-faint)}
+.cgo .weak{border-color:rgba(181,98,60,.45);background:rgba(181,98,60,.06)}
+.cgo .weak h2{font-family:var(--serif);font-size:18px;color:var(--clay)}
+.cgo .weak p{color:var(--ink-soft);font-size:13.5px;line-height:1.7}
+.cgo .grp-head h2{font-family:var(--serif);font-size:20px;font-weight:600}
+.cgo .crumb a,.cgo .pager a{color:var(--ink-soft)}
+.dot.absent{background:transparent!important;border:1px solid var(--rule)}
+.medallion{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:50%;
+  border:1.5px solid currentColor;background:var(--card);font-family:var(--serif);font-weight:600;line-height:1}
+
+/* ── matrix, same palette ── */
+.cgo table.mx thead th{border-bottom:1px solid var(--rule)}
+.cgo .mx tbody tr.el{border-top-color:var(--rule)}
+.cgo .mx tbody tr.el:hover td,.cgo .mx tbody tr.el:hover th{background:var(--paper)}
+.cgo .mx .sticky{background:var(--card)}
+.cgo .hub{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--ink)}
+.cgo .regime{font:600 9.5px/1.3 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-top:2px}
+.cgo .mx .rt{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--acc)}
+.cgo .cellv{font-size:13px;color:var(--ink-soft)}
+.cgo .appbar{background:var(--card);border-bottom-color:var(--rule)}
+.cgo .appbar .tabs a{border-color:var(--rule);background:var(--paper);color:var(--ink-soft)}
+.cgo .appbar .tabs a[aria-current]{background:var(--teal);border-color:var(--teal);color:#fff}
+.cgo .appbar .crumbs b{color:var(--ink)}
+</style>
+</head>
+<body data-peek="cgo" class="cgo">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="r-i-role-capture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9"/><path d="M8.5 8.5L12 12l3.5-3.5"/><path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></symbol>
+<symbol id="r-i-role-analyse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20v-5"/><path d="M9.5 20v-8"/><path d="M14 20v-3"/><circle cx="15.5" cy="8.5" r="4.5"/><path d="M18.8 11.8L22 15"/></symbol>
+<symbol id="r-i-role-interpret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 17a9 9 0 1 1 17 0"/><path d="M12 17l4.2-5"/><circle cx="12" cy="17" r="1.4"/></symbol>
+<symbol id="r-i-role-govern" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v8"/><path d="M6 3v18h5"/><path d="M14 3v4h4"/><circle cx="17" cy="18" r="3.2"/><path d="M17 15.6v2.4l1.6 1"/></symbol>
+<symbol id="r-i-role-exchange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13"/><path d="M13.5 5.5L17 9l-3.5 3.5"/><path d="M20 15H7"/><path d="M10.5 11.5L7 15l3.5 3.5"/></symbol>
+<symbol id="r-i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></symbol></defs></svg>
+
+<header class="appbar">
+  <div class="appbar-inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/admin">Box admin</a><span>›</span><a href="/admin/#/governance">Governance</a><span>›</span><span id="crumb"><b>CGO</b></span>
+    </nav>
+    <div class="tabs" id="tabs">
+      <a href="#/" data-v="list">The four elements</a>
+      <a href="#/matrix" data-v="matrix">By hub</a>
+    </div>
+  </div>
+</header>
+
+<main id="view" aria-live="polite"></main>
+
+<script>window.CGO = {"_authored": "Prototype data for a CGO surface. The four element definitions are quoted from the CGO Collateral Card creative brief (CGO / DWeb, front-and-back card, 2026-07-05). Everything under `components` was read from this box on 2026-09-18 — counts are live query results, not estimates. On the box this file would be generated the way agroecology.json is: a YAML map plus a build script, not authored here.", "attribution": {"source_label": "CGO Collateral Card — creative brief", "byline": "CGO / DWeb · card front-and-back · four elements", "tagline": "The community is the way.", "naming_note": "The card expands CGO as Community Governed Organizations. The Cohort-2 hardware concept note calls the same group Community Governance of Open Knowledge, and this box's ground profile said Commons Governance Organization. Three expansions, one acronym — the card's is used here.", "art_note": "The artwork is Jenni's, created for the CGO card and used here as intended. This page takes its palette and its statement-over-explanation pattern from the same piece."}, "regimes": {"owner": "Owner-held", "research": "Research consent", "governance": "Governance testimony", "education": "Education records", "public": "Public reference", "administrative": "Administrative"}, "hubs": [{"id": "farmer", "label": "Farmer", "regime": "owner", "roles": 5, "cards": 36}, {"id": "science", "label": "Science", "regime": "research", "roles": 4, "cards": 12}, {"id": "commons", "label": "Commons", "regime": "public", "roles": 6, "cards": 23}, {"id": "district", "label": "District", "regime": "governance", "roles": 1, "cards": 1}, {"id": "school", "label": "School", "regime": "education", "roles": 2, "cards": 26}, {"id": "box-admin", "label": "Box Admin", "regime": "administrative", "roles": 0, "cards": 11}], "elements": [{"n": 1, "key": "roles", "title": "Roles", "statement": "Say who decides, out loud.", "line": "Responsibility that is never named lands on whoever is nearest — and cannot be handed on.", "icon": "fi:fair-labor", "essence": "The defined responsibilities and decision making authority each community member holds within the CGO's governance structure.", "practice": "On a box, a role is not a job title — it is what the software will and will not let a person see and do, in every app at once. The box keeps one vocabulary and maps it outward to farmOS, LiteFarm, the POS and the rest.", "reflect": "Who here can say no, and to whom? Name the person, not the position.", "count": 12, "count_label": "roles defined", "components": [{"id": "roles", "title": "Role vocabulary", "state": "live", "detail": "12 roles, each mapping to a farmOS, LiteFarm, POS, grazing and CFC role plus Authelia groups", "lands_in": "shared.roles — box_admin, manager, worker, farmer, customer, viewer, researcher, librarian, district_planner, food_service, educator, student"}, {"id": "people", "title": "People holding a role", "state": "live", "detail": "28 people, but only 5 of the 12 roles are actually held: farmer 16, viewer 7, box_admin 3, worker 1, manager 1", "lands_in": "shared.people.box_role"}, {"id": "hub-role", "title": "Role × hub", "state": "live", "detail": "18 mappings decide which hub each role can enter. Box Admin has none — it is superuser-only by design", "lands_in": "commons.hub_role"}, {"id": "role-grant", "title": "Scoped grants", "state": "partial", "detail": "Scoped, expiring and revocable grants, additive to the standing role — the mechanism a CGO needs to lend authority without handing it over. Built and verified; 0 issued", "lands_in": "shared.role_grant — 0 rows"}, {"id": "authelia", "title": "One identity, every app", "state": "live", "detail": "Single sign-on carries the role into each application rather than each app keeping its own user list", "lands_in": "Authelia groups per role"}], "gap": {"detail": "The vocabulary has no word for the roles the card is actually about. There is no steward, no witness, no convener — the people who hold authority in a CGO handoff are unrepresentable, so the box records the farm role someone happens to have instead.", "suggestion": "Add steward and witness to shared.roles, and issue them as scoped grants rather than standing roles: authority for this cycle, this hub, this cohort. The grant table is already built and waiting for its first row."}, "hub_presence": {"farmer": "5 roles", "science": "4 roles", "commons": "6 roles", "district": "1 role", "school": "2 roles", "box-admin": "superuser only"}}, {"n": 2, "key": "protocols", "title": "Protocols", "statement": "Write it so it holds without you.", "line": "An agreement that works only while its author is in the room is a habit, not a protocol.", "icon": "fi:fhb-governance", "essence": "The agreed upon rules and procedures that guide correct conduct, communication, and decision-making within the community and organization.", "practice": "The box's protocols are written twice: once in words people read aloud and sign, and once as rules the database enforces. Where only the first exists, the protocol is a promise; where both exist, it is a mechanism.", "reflect": "Which of your agreements would still hold if the person who wrote them left?", "count": 6, "count_label": "consent regimes declared", "components": [{"id": "regimes", "title": "Consent regimes", "state": "live", "detail": "Six regimes, each naming what withdrawal actually does. Governance testimony cannot un-make a published recommendation — withdrawal damages legitimacy, not accuracy. Education records make exposure unrepresentable rather than merely discouraged", "lands_in": "commons.consent_regime — one per hub"}, {"id": "receipts", "title": "Consent receipts", "state": "live", "detail": "31 receipts: 18 for lots, 6 for people, 4 for peer boxes, 2 for farms, 1 given by voice. None revoked; one carries an expiry", "lands_in": "governance.consent_receipt, 2026-07-31 → 2026-09-06"}, {"id": "stewards-agreement", "title": "The Steward's Agreement", "state": "live", "detail": "Five questions, seven affirmations, seven reciprocities, revisable by the stewards who live under it. Carried on the shelf as text, and used as a setup gate", "lands_in": "canon shelf · Field Zine #2 v1.1"}, {"id": "phase-revocation", "title": "Phase-dependent revocation", "state": "live", "detail": "During listening a withdrawal deletes; after publication it can only record an amendment. Enforced by a trigger, not by a convention", "lands_in": "cll_lwg_cycles.status"}, {"id": "odrl", "title": "Machine-readable terms", "state": "planned", "detail": "The table that would let a receipt point at terms software can act on is empty, so every receipt's terms are prose a human must read", "lands_in": "governance.odrl_policies — 0 rows"}, {"id": "custody", "title": "Custody ≠ access", "state": "partial", "detail": "Holding someone's backup is deliberately a different permission from reading it. Built; no grant issued yet", "lands_in": "governance.custody_grant, custody_holding — 0 rows"}], "gap": {"detail": "31 receipts point at 0 machine-readable policies. The consent layer can record that somebody agreed, but not what they agreed to in a form any other program can check — which is precisely the part that has to travel when data moves between boxes.", "suggestion": "Write one ODRL policy per consent regime — six rows — and bind existing receipts to them. That turns the receipt from a note into a term."}, "hub_presence": {"farmer": "owner-held", "science": "research consent", "commons": "public reference", "district": "governance testimony", "school": "education records", "box-admin": "administrative"}}, {"n": 3, "key": "tools", "title": "Tools", "statement": "A decision should leave a trace.", "line": "The instruments a group decides with are the record of how it decided, or they are nothing.", "icon": "fi:fhb-co-creation", "essence": "The analog, digital, and procedural instruments (e.g., voting platforms, digital wallets, data systems) that enable the CGO to function and make collective decisions.", "practice": "Most of this box is tools, so the question is not how many there are but which ones a decision actually passes through — and whether they leave a trace anyone can check afterwards.", "reflect": "When your group decided something last, what did you use — and could a stranger reconstruct the decision from what it left behind?", "count": 109, "count_label": "cards across six hubs", "components": [{"id": "gov-surfaces", "title": "Governance surfaces", "state": "live", "detail": "Policies, Consent, Researchers and the Audit Log — the four screens in the launcher's Governance section", "lands_in": "/admin/#/governance"}, {"id": "hubs", "title": "Hubs", "state": "live", "detail": "Six hubs, 109 cards. Each hub carries its own consent regime, so where a tool sits decides the terms it works under", "lands_in": "commons.hub, hub_card"}, {"id": "question-sets", "title": "Talk to the … question sets", "state": "live", "detail": "The interview tool the card itself points at — structured conversations that produce cards rather than a form that produces rows", "lands_in": "the question-set suite"}, {"id": "eta", "title": "Ethical Tech Assessment", "state": "live", "detail": "Scores a tool against the GIAA six pillars. 143 assessments held, none of them of this box's own equipment", "lands_in": "/eta/"}, {"id": "audit", "title": "Audit log", "state": "partial", "detail": "818 events, every one written by `system` and every one from the certification pipeline. Zero governance or consent actions are logged", "lands_in": "governance.audit_log"}, {"id": "researcher-access", "title": "Researcher access", "state": "planned", "detail": "The surface for granting an outsider consent-gated access exists; no grant has been made", "lands_in": "governance.researcher_access — 0 rows"}], "gap": {"detail": "The audit log is the tool whose entire job is to make decisions reviewable, and it holds no decisions — 818 rows of certification machinery and not one consent grant, role change or withdrawal. A CGO that cannot show its own decision history has tools but no accountability.", "suggestion": "Log every write to consent_receipt, role_grant and custody_grant as a governance event with a human actor. The table already has the columns; nothing writes to them."}, "hub_presence": {"farmer": "36 cards", "science": "12 cards", "commons": "23 cards", "district": "1 card", "school": "26 cards", "box-admin": "11 cards"}}, {"n": 4, "key": "ceremonies", "title": "Ceremonies", "statement": "Some moments should not be a form.", "line": "A gathering that marks a transition is what makes a decision belong to the people in the room.", "icon": "fi:fhb-food-traditions", "essence": "The intentional gatherings or rituals that mark important moments, decisions, or transitions, grounding the organization's work in cultural and relational meaning.", "practice": "The box already has one real ceremony: a new box will not finish its setup until its steward has answered five questions — LAND, COMMUNITY, LINEAGE, BOX, FUTURE STEWARD — in their own words, in front of a witness who cannot revise the answer. Seven boxes were handed over that way.", "reflect": "What moment in your community's year would be wrong to do over a form?", "count": 2, "count_label": "handovers recorded on this box", "components": [{"id": "five-questions", "title": "The Five Questions", "state": "live", "detail": "A technical gate, not paperwork: the first-run wizard does not complete and federation is not offered until the answer is recorded", "lands_in": "the setup wizard · canon shelf"}, {"id": "enrollment", "title": "Recorded handovers", "state": "partial", "detail": "Two completed enrolments are recorded here. Seven boxes were handed over in the GIAA / DWeb Camp ritual — the other five left no row on this box", "lands_in": "flash.enrollment_completion — 2 rows"}, {"id": "cycle-phases", "title": "Cycle phases", "state": "live", "detail": "Publication is treated as a moment that changes what may be withdrawn — the closest thing the data model has to a rite of passage", "lands_in": "cll_lwg_cycles.status"}, {"id": "witness", "title": "Witnessing", "state": "planned", "detail": "The affirming steward, the reading aloud, the deliberately slow handshake in front of others — none of it is represented anywhere in the schema", "lands_in": "nothing on this box"}, {"id": "revision", "title": "Answer, then revision", "state": "planned", "detail": "Stewards revise their first answer weeks later; the zine permits it. Nothing preserves both the seed and the revision with lineage intact", "lands_in": "nothing on this box"}], "gap": {"detail": "Ceremonies are the element the card treats as co-equal with the other three, and the only one this box can barely represent. Roles, protocols and tools each have tables; a witnessed handover has two rows in an enrolment table that records a hostname and an IP address. The ritual that made the federation real is, to the software, a device registration.", "suggestion": "Give the ceremony a record of its own: who answered, who witnessed, what was affirmed, when, and what was revised afterwards — with the seed answer kept, not overwritten. It is one table, and it is the difference between a network that was handed over and a fleet that was provisioned."}, "hub_presence": {"farmer": "—", "science": "—", "commons": "—", "district": "—", "school": "—", "box-admin": "2 handovers"}}], "reflections": ["What CGO elements — roles, protocols, tools and ceremonies — does your community or organization already have in place that guide how decisions get made? Briefly describe them.", "Do these elements reflect the value systems and cultural knowledge systems of your community or organization? If not, how can you transform them so they do?"], "art": [{"src": "assets/img/cgo-card-front.jpg", "alt": "Illustrated card front: a river running from a woven basket past corn, pottery and a hummingbird, three people seated in conversation, solar panels and wind turbines, under the hand-lettered headline Worldbuilding While the World Burns.", "caption": "“Worldbuilding While the World Burns” — the reference piece the CGO card follows.", "credit": "Artwork by Jenni, created for the CGO collateral card. Shown as printed for SVN's Global Gathering 2026."}, {"src": "assets/img/cgo-card-back.jpg", "alt": "The reverse of the card: five bold statements each with a one-line explanation, above a bordered Reflections panel with two open prompts, illustrated with corn, leaves and a painted pot.", "caption": "The reverse: bold statement over one line, and the Reflections panel this page's own panel follows.", "credit": "Artwork by Jenni — the card's reverse, with the Reflections panel."}]};</script>
+<script>
+(function(){
+'use strict';
+var D = window.CGO, view = document.getElementById('view');
+var ACC = { roles:'var(--clay)', protocols:'var(--teal)', tools:'var(--corn)', ceremonies:'var(--sage)' };
+var STATE_DOT = { live:'#4CAF50', partial:'#F57F17', planned:'#BDBDBD' };
+var STATE_SAYS = { live:'in use', partial:'built, barely used', planned:'not built yet' };
+
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+/* A numbered medallion, not an icon. The box's four fhb-* glyphs are all
+   hexagon-framed and read as the same mark at 22px, and the card's imagery is
+   illustration rather than iconography — so the element's number in its own
+   colour is both clearer and honest about where the artwork belongs. */
+function mark(el,size){
+  size = size || 34;
+  return '<span class="medallion" style="width:'+size+'px;height:'+size+'px;border-color:'+ACC[el.key]+';color:'+ACC[el.key]+
+    ';font-size:'+Math.round(size*.46)+'px">'+el.n+'</span>';
+}
+function band(){ return '<div class="band">'+D.elements.map(function(e){ return '<i style="background:'+ACC[e.key]+'"></i>'; }).join('')+'</div>'; }
+function attribution(){
+  var a = D.attribution;
+  return esc(a.source_label)+' · '+esc(a.byline)+' · <a class="lnk" href="canon.html#steward">the Steward’s Agreement, on the canon shelf</a>';
+}
+function figure(i){
+  var a = (D.art||[])[i];
+  if (!a) return '';
+  return '<figure class="art"><img src="'+esc(a.src)+'" alt="'+esc(a.alt)+'" loading="lazy" data-zoom'+
+    ' data-caption="'+esc(a.caption)+'" data-credit="'+esc(a.credit)+'">'+
+    '<figcaption><b>'+esc(a.caption)+'</b>'+esc(a.credit)+'</figcaption></figure>';
+}
+function artslot(kind, text){
+  return '<div class="artslot"><span class="k">'+esc(kind)+'</span><span class="t">'+esc(text)+'</span></div>';
+}
+function reflections(hint){
+  return '<section class="reflectbox"><h2><i></i>Reflections<i></i></h2><ol>'+
+    D.reflections.map(function(r){ return '<li>'+esc(r)+'</li>'; }).join('')+'</ol>'+
+    (hint ? '<p class="hint">'+esc(hint)+'</p>' : '')+'</section>';
+}
+
+/* ───────────── the card, unfolded ───────────── */
+function block(el){
+  return '<a class="q-card" style="--acc:'+ACC[el.key]+'" href="#/'+el.n+'">'+
+    '<div class="top"><span class="n">0'+el.n+'</span><h3>'+esc(el.title)+'</h3></div>'+
+    '<p class="statement">'+esc(el.statement)+'</p>'+
+    '<p class="line">'+esc(el.line)+'</p>'+
+    '<p class="quote">'+esc(el.essence)+'</p>'+
+    '<div class="holds"><b>'+el.count+'</b><span>'+esc(el.count_label)+'</span></div>'+
+    '<div class="spheres">'+el.components.map(function(c){
+      return '<span class="sph '+(c.state==='live'?'has':'none')+'" data-tip="'+esc(c.title+' — '+STATE_SAYS[c.state])+'">'+esc(c.title)+'</span>';
+    }).join('')+'</div></a>';
+}
+function renderList(){
+  view.className = 'stack';
+  view.innerHTML =
+    '<section class="front">'+band()+
+      '<div class="frontgrid"><div>'+
+        '<p class="eyebrow">Community Governed Organizations</p>'+
+        '<h1>Roles, protocols, tools and ceremonies.</h1>'+
+        '<p class="tagline">“'+esc(D.attribution.tagline)+'”</p>'+
+        '<p class="lede">Four elements make a community able to govern itself: the responsibilities people hold, '+
+          'the rules they agree to, the instruments they decide with, and the gatherings that mark a decision. '+
+          'This is the card, and then what this box actually holds for each one — including where it holds almost nothing.</p>'+
+        '<div class="go"><a href="#/matrix">All four, against the six hubs →</a>'+
+          '<a href="canon.html#steward">The Steward’s Agreement →</a></div>'+
+      '</div>'+
+      figure(0)+
+      '</div>'+
+    '</section>'+
+
+    '<section><header class="grp-head"><h2>The four elements</h2>'+
+      '<span class="t-faint">From the card. Open one for what is here, what is built but unused, and what is missing.</span></header>'+
+      '<div class="blocks">'+D.elements.map(block).join('')+'</div></section>'+
+
+    '<div class="cardpair">'+
+      reflections('Write on the card. The box keeps no copy of your answer — that is the point of asking on paper.')+
+      figure(1)+
+    '</div>'+
+
+    '<section class="front"><div class="cardfoot">'+
+      '<p><b>What this page is.</b> The card asks a community to name its own four elements. This surface answers the '+
+        'same four questions about the box in front of you, using live counts rather than claims: '+D.elements.map(function(e){ return e.count+' '+e.count_label; }).join(' · ')+'. '+
+        'A count is what the software can show, not what a community does — five of the seven boxes handed over in the '+
+        'GIAA ritual left no record here, and nothing in the schema knows what a witness is.</p>'+
+      '<div class="qrslot">QR<br>SLOT</div>'+
+    '</div>'+
+    '<p class="t-faint" style="margin-top:14px;font-size:12px">'+attribution()+'</p></section>';
+}
+
+/* ───────────── one element ───────────── */
+function component(c){
+  return '<div class="comp"><span class="dot'+(c.state==='planned'?' absent':'')+'" style="background:'+(STATE_DOT[c.state]||STATE_DOT.planned)+'" data-tip="'+esc(STATE_SAYS[c.state])+'"></span>'+
+    '<span style="min-width:0"><span class="nm">'+esc(c.title)+'</span>'+
+    '<span class="rl"><span>'+esc(STATE_SAYS[c.state])+'</span></span>'+
+    '<span class="li" style="font-family:inherit;font-size:13px;color:var(--ink-soft);line-height:1.65">'+esc(c.detail)+'</span>'+
+    '<span class="li">'+esc(c.lands_in)+'</span></span></div>';
+}
+function renderElement(n){
+  var el = D.elements.filter(function(e){ return String(e.n)===String(n); })[0];
+  if (!el) { view.className=''; view.innerHTML='<p class="t-body">No such element. <a class="lnk" href="#/">Back to CGO</a></p>'; return; }
+  var prev = D.elements[el.n-2], next = D.elements[el.n], acc = ACC[el.key];
+  view.className = 'stack-sm el-page';
+  view.innerHTML =
+    '<div class="crumb"><a href="#/">CGO</a><span>·</span><span>element '+el.n+' of 4</span></div>'+
+    '<div class="card pad-lg" style="--acc:'+acc+';border-left:5px solid '+acc+'"><div class="el-head">'+mark(el,44)+'<div style="min-width:0">'+
+      '<div class="el-n">Element '+el.n+' / 4</div><h1>'+esc(el.title)+'</h1>'+
+      '<p class="el-statement">'+esc(el.statement)+'</p>'+
+      '<p class="el-line">'+esc(el.line)+'</p>'+
+      '<p class="quotedef">'+esc(el.essence)+'</p>'+
+      '<p class="el-line">'+esc(el.practice)+'</p>'+
+      '<div class="reflect"><div class="el-n upper" style="font-family:inherit">Reflect</div><p>'+esc(el.reflect)+'</p></div>'+
+      '<div style="font-size:11px;color:var(--ink-faint);margin-top:16px">'+attribution()+'</div>'+
+    '</div></div></div>'+
+
+    '<section class="card" style="overflow:hidden"><header class="sect-head"><h2>What this box holds</h2>'+
+      '<span class="t-faint">'+el.components.filter(function(c){return c.state==='live';}).length+' of '+el.components.length+
+      ' in use · a hollow dot is a mechanism that does not exist yet</span></header>'+
+      '<div class="divide">'+el.components.map(function(c){ return '<div class="sph-row">'+component(c)+'</div>'; }).join('')+'</div></section>'+
+
+    '<section class="weak"><h2>Where this element is weak here</h2><p>'+esc(el.gap.detail)+'</p>'+
+      '<p class="mt2"><b style="font-weight:600">Suggestion: </b>'+esc(el.gap.suggestion)+'</p></section>'+
+
+    reflections()+
+
+    '<div class="pager">'+(prev?'<a href="#/'+prev.n+'">← '+esc(prev.title)+'</a>':'<span></span>')+
+      (next?'<a href="#/'+next.n+'">'+esc(next.title)+' →</a>':'<a href="#/matrix">By hub →</a>')+'</div>';
+}
+
+/* ───────────── four elements × six hubs ───────────── */
+function renderMatrix(){
+  view.className = 'stack-sm';
+  view.innerHTML =
+    '<section class="front" style="padding:24px 26px">'+band()+
+      '<div class="row"><h1 style="font-family:var(--serif);font-size:26px;font-weight:600">The four elements, by hub</h1>'+
+      '<a class="lnk" href="#/">← Back to the card</a></div>'+
+      '<p class="lede" style="margin-top:8px">Each hub on this box carries its own consent regime, so the same element '+
+      'means something different depending on where a person is standing.</p></section>'+
+    '<div class="card tblwrap"><table class="mx"><thead><tr><th class="sticky"></th>'+
+      D.hubs.map(function(h){ return '<th scope="col"><div class="hub">'+esc(h.label)+'</div><div class="regime">'+esc(D.regimes[h.regime])+'</div></th>'; }).join('')+
+    '</tr></thead><tbody>'+
+      D.elements.map(function(el){
+        return '<tr class="el" style="--acc:'+ACC[el.key]+'"><th scope="row" class="sticky"><a href="#/'+el.n+'">'+mark(el,22)+
+          '<span class="rt">'+esc(el.title)+'</span></a></th>'+
+          D.hubs.map(function(h){
+            var v = el.hub_presence[h.id];
+            return v && v !== '—'
+              ? '<td><a href="#/'+el.n+'"><span class="cellv">'+esc(v)+'</span></a></td>'
+              : '<td style="text-align:center"><span style="color:var(--rule)" data-tip="Nothing here yet — the box does not represent this element in this hub.">·</span></td>';
+          }).join('')+'</tr>';
+      }).join('')+
+    '</tbody></table></div>'+
+    '<div style="padding:0 4px"><p style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">The Ceremonies row is the finding, '+
+      'not a rendering error: five of six hubs hold nothing, and the sixth holds two device enrolments.</p>'+
+      '<p class="t-faint" style="margin-top:8px;color:var(--ink-faint)">'+esc(D.attribution.naming_note)+'</p>'+
+      '<p class="t-faint" style="margin-top:8px;color:var(--ink-faint)">'+esc(D.attribution.art_note)+'</p></div>'+
+    reflections();
+}
+
+/* ───────────── router ───────────── */
+function route(){
+  var h = (location.hash||'').replace(/^#\/?/,''), crumb = document.getElementById('crumb'), v = 'list';
+  if (h === 'matrix') { v='matrix'; renderMatrix(); crumb.innerHTML = '<a href="#/">CGO</a> › <b>By hub</b>'; }
+  else if (/^[1-4]$/.test(h)) {
+    v='el'; renderElement(h);
+    crumb.innerHTML = '<a href="#/">CGO</a> › <b>'+esc(D.elements[+h-1].title)+'</b>';
+  } else { renderList(); crumb.innerHTML = '<b>CGO</b>'; }
+  document.querySelectorAll('#tabs a').forEach(function(a){
+    if (a.getAttribute('data-v') === v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+  });
+  document.title = (v==='matrix'?'By hub · ':v==='el'?esc(D.elements[+h-1].title)+' · ':'') + 'CGO — Farm Hack Box';
+}
+window.addEventListener('hashchange', function(){ route(); window.scrollTo(0,0); });
+route();
+})();
+</script>
+</body>
+</html>

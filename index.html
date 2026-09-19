@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farm Hack Box</title>
+  <meta name="description" content="Your farm's digital infrastructure — owned by you, connected to a trusted network, resilient by design.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: #ffffff;
+      color: #000000;
+      line-height: 1.5;
+    }
+    
+    .mono { font-family: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace; }
+    a { color: inherit; text-decoration: none; }
+    
+    /* Header */
+    .header {
+      background: #000;
+      color: #fff;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .header-brand img {
+      height: 144px;
+      filter: invert(1);
+    }
+    
+    .header-nav {
+      display: flex;
+      gap: 24px;
+      font-size: 15px;
+    }
+    
+    .header-nav a {
+      color: rgba(255,255,255,0.75);
+      transition: color 0.15s;
+    }
+    
+    .header-nav a:hover { color: #fff; }
+    
+    /* Hero */
+    .hero {
+      padding: 56px 24px 40px;
+      max-width: 880px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 700;
+      margin: 0 0 16px;
+      letter-spacing: -0.025em;
+    }
+    
+    .hero p {
+      font-size: 18px;
+      color: #555;
+      max-width: 580px;
+      margin: 0 auto 12px;
+    }
+    
+    .hero-tags {
+      font-size: 12px;
+      color: #777;
+      letter-spacing: 0.02em;
+    }
+    
+    /* Main Grid */
+    .main-section {
+      padding: 16px 24px 56px;
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+    
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px 1fr;
+      gap: 40px;
+      align-items: start;
+      position: relative;
+    }
+    
+    @media (max-width: 900px) {
+      .main-grid { grid-template-columns: 1fr; gap: 20px; }
+      .center-column { order: -1; }
+      .connection-lines { display: none; }
+    }
+    
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Layer Cards - Pure white/grey, NO color */
+    .layer-card {
+      background: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    
+    .layer-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      border-color: #999;
+    }
+    
+    .layer-card.active {
+      border: 2px solid #000;
+    }
+    
+    .layer-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .layer-header span {
+      font-weight: 600;
+      font-size: 15px;
+      color: #000;
+    }
+    
+    .layer-body {
+      padding: 14px 16px;
+      background: #ffffff;
+    }
+    
+    .tech-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    
+    .tech-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 5px 10px;
+      background: #f8f8f8;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      color: #333;
+    }
+    
+    .layer-desc {
+      display: none;
+      margin-top: 12px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.55;
+      border-top: 1px solid #eee;
+      padding-top: 12px;
+    }
+    
+    .layer-card.active .layer-desc { display: block; }
+    @media (max-width: 700px) { .header { flex-wrap: wrap; gap: 12px; } .header-brand img { height: 80px; } .header-nav { flex-wrap: wrap; gap: 8px 18px; } }
+    .layer-go { display: inline-block; margin-top: 8px; font-weight: 600; color: #000; text-decoration: underline; text-underline-offset: 2px; }
+    .layer-card:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+    button.box-hint { background: none; border: 0; font: inherit; padding: 2px 4px; }
+    .peek-sub { display: block; margin-top: 10px; font-size: 12px; color: #555; text-decoration: underline; text-underline-offset: 2px; }
+    .peek-sub:hover { color: #000; }
+
+    /* Tour — the way on from here */
+    .tour { padding: 8px 24px 64px; max-width: 1150px; margin: 0 auto; }
+    .tour-head { text-align: center; margin-bottom: 28px; }
+    .tour-head h2 { font-size: 26px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
+    .tour-head p { color: #555; max-width: 560px; margin: 0 auto; font-size: 15px; }
+    .tour-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+    .tour-card { display: flex; flex-direction: column; gap: 8px; border: 1px solid #ccc; border-radius: 12px; padding: 20px; background: #fff; transition: all .2s; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .tour-card:hover { transform: translateY(-2px); border-color: #000; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+    .tour-card .n { font: 600 11px/1 ui-monospace, Menlo, monospace; color: #888; letter-spacing: .08em; }
+    .tour-card h3 { font-size: 17px; font-weight: 700; }
+    .tour-card p { font-size: 13px; color: #555; line-height: 1.55; flex: 1; }
+    .tour-card .go { font-size: 13px; font-weight: 600; }
+    .tour-card.dark { background: #000; color: #fff; border-color: #000; }
+    .tour-card.dark p { color: rgba(255,255,255,.7); }
+    .tour-card.dark .n { color: rgba(255,255,255,.5); }
+    
+    /* Center Column */
+    .center-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    
+    .box-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    
+    /* Connection lines - behind cards, subtle */
+    .connection-lines {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100vw;
+      max-width: 1100px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .connection-lines::before,
+    .connection-lines::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: calc(50% - 170px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #ccc 20%, #ccc 80%, transparent);
+    }
+    
+    .connection-lines::before {
+      left: 0;
+      transform: translateY(-50%);
+    }
+    
+    .connection-lines::after {
+      right: 0;
+      transform: translateY(-50%);
+    }
+    
+    .box-container {
+      width: 300px;
+      padding: 28px 24px;
+      background: #fff;
+      border: 2px solid #000;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+      z-index: 2;
+    }
+    
+    .box-image {
+      width: 220px;
+      height: auto;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    
+    .box-tagline {
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 4px;
+      letter-spacing: 0.02em;
+    }
+    
+    .box-hint {
+      font-size: 12px;
+      color: #666;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    
+    .box-hint:hover {
+      color: #000;
+    }
+    
+    /* GOATech badge */
+    .goatech-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 8px 14px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 24px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .goatech-badge img {
+      width: 22px;
+      height: 22px;
+    }
+    
+    /* Peek button */
+    .peek-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 10px 18px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    
+    .peek-button:hover {
+      background: #333;
+      transform: translateY(-1px);
+    }
+    
+    .peek-button svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    /* Specs Panel */
+    .specs-panel {
+      display: none;
+      background: #000;
+      color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 16px;
+      width: 100%;
+      max-width: 320px;
+    }
+    
+    .specs-panel.active { display: block; }
+    
+    .specs-title {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.5;
+      margin-bottom: 14px;
+    }
+    
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 13px;
+    }
+    
+    .spec-row:last-of-type { border-bottom: none; }
+    .spec-row .label { opacity: 0.7; }
+    
+    .spec-note {
+      margin-top: 16px;
+      padding: 14px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    
+    /* Network tags */
+    .network-section {
+      margin-top: 24px;
+      text-align: center;
+    }
+    
+    .network-label {
+      font-size: 10px;
+      color: #888;
+      margin-bottom: 10px;
+      letter-spacing: 0.08em;
+    }
+    
+    .network-tags {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .network-tag {
+      font-size: 11px;
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      border-radius: 99px;
+      background: #fff;
+      color: #555;
+    }
+    
+    /* Value Props */
+    .value-props {
+      background: #000;
+      color: #fff;
+      padding: 64px 24px;
+    }
+    
+    .value-props-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .value-props h2 {
+      font-size: 28px;
+      text-align: center;
+      margin: 0 0 48px;
+      font-weight: 600;
+    }
+    
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    
+    @media (max-width: 700px) {
+      .value-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+    
+    .value-item { text-align: center; }
+    .value-item svg { margin-bottom: 20px; opacity: 0.9; }
+    .value-item h3 { font-size: 17px; margin: 0 0 10px; font-weight: 600; }
+    .value-item p { font-size: 14px; opacity: 0.7; line-height: 1.6; }
+    
+    /* Quote */
+    .quote-section {
+      padding: 64px 24px;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .quote-section blockquote {
+      font-size: 22px;
+      line-height: 1.5;
+      color: #333;
+      margin: 0 0 16px;
+      font-style: italic;
+    }
+    
+    .quote-section cite {
+      font-size: 14px;
+      color: #888;
+      font-style: normal;
+    }
+    
+    /* Footer */
+    .footer {
+      background: #000;
+      color: #fff;
+      padding: 48px 24px;
+    }
+    
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    
+    @media (max-width: 700px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    
+    .footer-brand { margin-bottom: 16px; }
+    .footer-brand img { height: 56px; filter: invert(1); }
+    .footer-col p { font-size: 13px; opacity: 0.7; line-height: 1.7; }
+    
+    .footer-col-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+      opacity: 0.5;
+    }
+    
+    .footer-col ul { list-style: none; font-size: 13px; line-height: 2.4; }
+    .footer-col a { color: rgba(255,255,255,0.75); transition: color 0.15s; }
+    .footer-col a:hover { color: #fff; }
+    
+    .footer-bottom {
+      max-width: 900px;
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      opacity: 0.5;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🌾%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/peek.css">
+<script src="assets/peek.js" defer></script>
+</head>
+<body data-peek="box">
+
+  <header class="header">
+    <div class="header-brand">
+      <img src="assets/img/farmhack-logo.png" alt="Farm Hack">
+    </div>
+    <nav class="header-nav">
+      <a href="https://farmhack.org/tools">Tools</a>
+      <a href="https://forum.goatech.org/c/farmhack/21">Community</a>
+      <a href="https://farmhack.org/content/get-started">About</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>The Farm Hack Box</h1>
+    <p>Your farm's digital infrastructure — owned by you, connected to a trusted network, resilient by design.</p>
+    <p class="hero-tags mono">Open source · Offline-first · Solar-capable · Community-governed</p>
+  </section>
+
+  <section class="main-section">
+    <!-- Connection lines behind everything -->
+    <div class="connection-lines"></div>
+    
+    <div class="main-grid">
+      
+      <!-- Left Column -->
+      <div class="column">
+        
+        <!-- Farm Management -->
+        <div class="layer-card" onclick="toggleLayer(this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLayer(this)}">
+          <div class="layer-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+              <path d="M9 22V12h6v10"/>
+            </svg>
+            <span>Farm management suite</span>
+          </div>
+          <div class="layer-body">
+            <div class="tech-logos">
+              <div class="tech-logo"><span>Crop</span></div>
+              <div class="tech-logo"><span>Grazing</span></div>
+              <div class="tech-logo"><span>Barn & equipment</span></div>
+              <div class="tech-logo"><span>Irrigation</span></div>
+              <div class="tech-logo"><span>Record-keeping</span></div>
+              <div class="tech-logo"><span>Analysis tools</span></div>
+              <span style="font-size: 11px; color: #888; font-style: italic; padding: 5px;">and more...</span>
+            </div>
+            <p class="layer-desc">Complete farm management covering crops, livestock, equipment, irrigation scheduling, compliance records, and economic performance analysis. <a class="layer-go" href="agroecology.html" onclick="event.stopPropagation()">What the box holds, element by element →</a></p>
+          </div>
+        </div>
+        
+        <!-- Commerce -->
+        <div class="layer-card" onclick="toggleLayer(this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLayer(this)}">
+          <div class="layer-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            <span>Commerce & inventory</span>
+          </div>
+          <div class="layer-body">
+            <div class="tech-logos">
+              <div class="tech-logo"><span>POS</span></div>
+              <div class="tech-logo"><span>CSA Manager</span></div>
+              <div class="tech-logo"><span>Invoicing</span></div>
+            </div>
+            <p class="layer-desc">Run your farmstand, manage CSA shares, track inventory — without monthly SaaS fees. <a class="layer-go" href="pos.html" onclick="event.stopPropagation()">Meet the Farm Hack POS →</a></p>
+          </div>
+        </div>
+        
+        <!-- Communications -->
+        <div class="layer-card" onclick="toggleLayer(this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLayer(this)}">
+          <div class="layer-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+            </svg>
+            <span>Communications</span>
+          </div>
+          <div class="layer-body">
+            <div class="tech-logos">
+              <div class="tech-logo"><span>Forgejo Git</span></div>
+              <div class="tech-logo"><span>Media</span></div>
+              <div class="tech-logo"><span>Offline AI</span></div>
+            </div>
+            <p class="layer-desc">Host documentation, share media with your crew, run local AI — without internet dependency.</p>
+          </div>
+        </div>
+        
+        <!-- Resilience -->
+        <div class="layer-card" onclick="toggleLayer(this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLayer(this)}">
+          <div class="layer-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Resilience</span>
+          </div>
+          <div class="layer-body">
+            <div class="tech-logos">
+              <div class="tech-logo"><span>Solar ready</span></div>
+              <div class="tech-logo"><span>Offline-first</span></div>
+              <div class="tech-logo"><span>Auto-backup</span></div>
+            </div>
+            <p class="layer-desc">Built for rural reality: works when the internet doesn't, runs on solar, backs up automatically.</p>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Center Column -->
+      <div class="column center-column">
+        <div class="box-wrapper">
+          <div class="box-container">
+            <img src="assets/img/farm-hack-box.png" 
+                 alt="Farm Hack Box - Raspberry Pi 5" 
+                 class="box-image">
+            <div class="box-tagline">Small Box · Big Power</div>
+            <button type="button" class="box-hint" onclick="toggleSpecs()" aria-controls="specsPanel">Click for specs</button>
+            
+            <!-- GOATech badge -->
+            <div class="goatech-badge">
+              <img src="assets/img/goatech.png" alt="GOAT">
+              <span>GOATech inside!</span>
+            </div>
+            
+            <!-- Peek button -->
+            <a href="canon.html#tree" class="peek-button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              peek inside the box...
+            </a>
+            <a href="agroecology.html" class="peek-sub">or start with the agroecology orientation →</a>
+          </div>
+        </div>
+        
+        <div id="specsPanel" class="specs-panel">
+          <div class="specs-title mono">Hardware specifications</div>
+          <div class="spec-row"><span class="label">Compute</span><span class="mono">Raspberry Pi 5</span></div>
+          <div class="spec-row"><span class="label">Memory</span><span class="mono">8GB RAM</span></div>
+          <div class="spec-row"><span class="label">Storage</span><span class="mono">1TB NVMe SSD</span></div>
+          <div class="spec-row"><span class="label">Power</span><span class="mono">5V USB-C / 12V Solar</span></div>
+          <div class="spec-row"><span class="label">Network</span><span class="mono">WiFi 6 + GbE</span></div>
+          <div class="spec-note"><strong>Solar-ready:</strong> Runs continuously on 50W panel + 12V battery. Perfect for field, barn, or off-grid deployment.</div>
+        </div>
+        
+        <div class="network-section">
+          <div class="network-label mono">CONNECTED TO</div>
+          <div class="network-tags">
+            <span class="network-tag">Trusted farms</span>
+            <span class="network-tag">Local library</span>
+            <span class="network-tag">Conservation district</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Column -->
+      <div class="column">
+        
+        <!-- Global Tool Registry -->
+        <div class="layer-card" onclick="toggleLayer(this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLayer(this)}">
+          <div class="layer-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+            </svg>
+            <span>Global Tool Registry</span>
+          </div>
+          <div class="layer-body">
+            <div class="tech-logos">
+              <div class="tech-logo"><span>Farm Hack</span></div>
+              <div class="tech-logo"><span>GIAA</span></div>
+              <div class="tech-logo"><span>Build guides</span></div>
+            </div>
+            <p class="layer-desc">Full Farm Hack tool registry with GIAA enterprise tools — available offline, synced when connected. <a class="layer-go" href="canon.html#tool-registry" onclick="event.stopPropagation()">The Tool Registry on the shelf →</a></p>
+          </div>
+        </div>
+        
+        <!-- OpenTEAM FAIR Tech -->
+        <div class="layer-card" onclick="toggleLayer(this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLayer(this)}">
+          <div class="layer-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+              <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+            </svg>
+            <span>OpenTEAM FAIR Tech</span>
+          </div>
+          <div class="layer-body">
+            <div class="tech-logos">
+              <div class="tech-logo"><span>OpenTEAM</span></div>
+              <div class="tech-logo"><span>FAIR Registry</span></div>
+              <div class="tech-logo"><span>ETA</span></div>
+            </div>
+            <p class="layer-desc">Participate in the OpenTEAM network with Ethical Tech Assessment. Full data sovereignty. <a class="layer-go" href="canon.html#giaa" onclick="event.stopPropagation()">The Six Ethical Pillars →</a></p>
+          </div>
+        </div>
+        
+        <!-- Ag Knowledge Concordance -->
+        <div class="layer-card" onclick="toggleLayer(this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLayer(this)}">
+          <div class="layer-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+            </svg>
+            <span>Ag Knowledge Concordance</span>
+          </div>
+          <div class="layer-body">
+            <div class="tech-logos">
+              <div class="tech-logo"><span>Data standards</span></div>
+              <div class="tech-logo"><span>Interoperability</span></div>
+              <div class="tech-logo"><span>Discovery</span></div>
+            </div>
+            <p class="layer-desc">Unified agricultural knowledge mapping — linking tools, data standards, and practices across platforms. <a class="layer-go" href="canon.html" onclick="event.stopPropagation()">The canonical source texts →</a></p>
+          </div>
+        </div>
+        
+        <!-- P2P Collaboration -->
+        <div class="layer-card" onclick="toggleLayer(this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLayer(this)}">
+          <div class="layer-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/>
+              <circle cx="5" cy="5" r="2"/><circle cx="19" cy="19" r="2"/>
+              <path d="M6.5 6.5l3 3m5 5l3 3M14.5 9.5l3-3M6.5 17.5l3-3"/>
+            </svg>
+            <span>P2P collaboration</span>
+          </div>
+          <div class="layer-body">
+            <div class="tech-logos">
+              <div class="tech-logo"><span>Moss/Holochain</span></div>
+              <div class="tech-logo"><span>Trusted mesh</span></div>
+              <div class="tech-logo"><span>Federation</span></div>
+            </div>
+            <p class="layer-desc">Peer-to-peer data sync via Holochain, trusted mesh networking, federated Git for documentation.</p>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </section>
+
+  <section class="tour" id="tour">
+    <div class="tour-head">
+      <h2>Peek inside</h2>
+      <p>Start with what a working box carries and what it runs, meet the app most farm stores meet first, then the network it belongs to.</p>
+    </div>
+    <div class="tour-grid">
+      <a class="tour-card dark" href="canon.html">
+        <span class="n">02 · SCOPE &amp; LAUNCH MENU</span>
+        <h3>Canonical source texts</h3>
+        <p>The shelf every box carries, and the tree: one hexagon per tool the box runs. Point at any cell to see what it does.</p>
+        <span class="go">Open the shelf →</span>
+      </a>
+      <a class="tour-card" href="agroecology.html">
+        <span class="n">03 · ORIENTATION</span>
+        <h3>Agroecology</h3>
+        <p>The ten FAO elements, and what the box actually holds for each — including where it holds nothing yet.</p>
+        <span class="go">See the ten elements →</span>
+      </a>
+      <a class="tour-card" href="pos.html">
+        <span class="n">04 · COMMERCE LAYER</span>
+        <h3>Farm Hack POS</h3>
+        <p>Point of sale for farm stores: consignment, NFC member cards, scales, offline-first, no monthly fee.</p>
+        <span class="go">Meet the POS →</span>
+      </a>
+      <a class="tour-card" href="not-a-box-store.html">
+        <span class="n">05 · THE NETWORK</span>
+        <h3>Not a Box Store</h3>
+        <p>The Farm Hack Box is one of a family: library, civic data, open science. Build one, sponsor one.</p>
+        <span class="go">Visit the network →</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="value-props">
+    <div class="value-props-inner">
+      <h2>Why choose self-hosted infrastructure?</h2>
+      <div class="value-grid">
+        <div class="value-item">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          <h3>Data sovereignty</h3>
+          <p>Your farm data stays on your farm. No cloud lock-in, no subscription fees, no surprises.</p>
+        </div>
+        <div class="value-item">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          <h3>Community governed</h3>
+          <p>Built by farmers, for farmers. Steered by the community, funded by grants not VC.</p>
+        </div>
+        <div class="value-item">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2"/></svg>
+          <h3>Built for resilience</h3>
+          <p>Works offline, runs on solar, survives internet outages. Infrastructure you can depend on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-section">
+    <blockquote>"The best farm technology is technology you can fix yourself, share with your neighbors, and pass on to the next generation."</blockquote>
+    <cite>— Farm Hack community ethos</cite>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <div class="footer-brand">
+          <img src="assets/img/farmhack-logo.png" alt="Farm Hack">
+        </div>
+        <p>An open-source community building tools for resilient agriculture. The Farm Hack Box is community-owned infrastructure for the commons.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title mono">Project</div>
+        <ul>
+          <li><a href="https://farmhack.org/content/get-started">About</a></li>
+          <li><a href="not-a-box-store.html">Not a Box Store</a></li>
+          <li><a href="https://farmhack.org/tools">Documentation</a></li>
+          <li><a href="https://github.com/farmhack">GitHub</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title mono">Community</div>
+        <ul>
+          <li><a href="https://forum.goatech.org/c/farmhack/21">GOATech Forum</a></li>
+          <li><a href="https://farmhack.org/forum">Conversations</a></li>
+          <li><a href="https://farmhack.org/calendar/list">Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title mono">Support</div>
+        <ul>
+          <li><a href="#" data-peek-soon="Contribute">Contribute</a></li>
+          <li><a href="#" data-peek-soon="Host a node">Host a node</a></li>
+          <li><a href="#" data-peek-soon="Volunteer">Volunteer</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Farm Hack. CC BY-SA 4.0 + GPL-3.0</span>
+      <span>Part of the OpenTEAM network</span>
+    </div>
+  </footer>
+
+  <script>
+    function toggleLayer(el) {
+      const cards = document.querySelectorAll('.layer-card');
+      const wasActive = el.classList.contains('active');
+      cards.forEach(card => card.classList.remove('active'));
+      if (!wasActive) el.classList.add('active');
+    }
+    
+    function toggleSpecs() {
+      document.getElementById('specsPanel').classList.toggle('active');
+    }
+  </script>
+
+</body>
+</html>
