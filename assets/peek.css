@@ -1,0 +1,72 @@
+/* Shared chrome for the peek site: the tour bar across the top of every page,
+   the "this lives on a running box" dialog, and hover/tap tips. Each page keeps
+   its own design; everything here is namespaced `peek-` so it cannot collide. */
+
+.peek-bar{
+  position:relative;z-index:900;
+  background:#0f2d1e;color:#fff;
+  font:500 13px/1.3 'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  padding:0 16px;padding-top:env(safe-area-inset-top,0px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.peek-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap;min-height:44px}
+.peek-brand{font-weight:700;letter-spacing:.01em;color:#fff;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.peek-brand small{font-weight:500;color:rgba(255,255,255,.5);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.peek-steps{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto;list-style:none;padding:0;margin-top:0;margin-bottom:0}
+.peek-steps a{
+  display:flex;align-items:center;gap:6px;padding:7px 10px;border-radius:6px;
+  color:rgba(255,255,255,.72);text-decoration:none;white-space:nowrap;
+}
+.peek-steps a:hover{background:rgba(255,255,255,.08);color:#fff}
+.peek-steps a[aria-current="page"]{background:#fff;color:#0f2d1e}
+.peek-steps .n{font:600 10px/1 ui-monospace,Menlo,monospace;opacity:.6}
+.peek-steps a[aria-current="page"] .n{opacity:.8}
+@media (max-width:760px){
+  .peek-bar-inner{padding:6px 0}
+  .peek-steps{margin-left:0;width:100%;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+}
+
+/* ── dialog ── */
+.peek-modal{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:16px}
+.peek-modal[hidden]{display:none!important}
+.peek-scrim{position:absolute;inset:0;background:rgba(13,30,22,.55);backdrop-filter:blur(2px)}
+.peek-dialog{
+  position:relative;background:#fff;color:#1a1a1a;border-radius:12px;max-width:30rem;width:100%;
+  max-height:calc(100vh - 32px);overflow:auto;
+  box-shadow:0 24px 64px rgba(0,0,0,.35);
+  font:400 14px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  padding:22px 22px 18px;
+}
+.peek-dialog .eyebrow{margin:0 0 6px;font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#1B5E4B}
+.peek-dialog h2{margin:0 0 8px;font-size:18px;line-height:1.25;font-weight:700;letter-spacing:-.01em;color:#111}
+.peek-dialog p{margin:0 0 10px;color:#444}
+.peek-dialog code{font:12px/1.4 ui-monospace,Menlo,monospace;background:#F0EDE8;padding:2px 6px;border-radius:4px;overflow-wrap:anywhere}
+.peek-dialog dl{margin:10px 0 12px;font-size:13px;border-top:1px solid #eee}
+.peek-dialog dl>div{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid #eee}
+.peek-dialog dt{flex:0 0 5.5rem;color:#888}
+.peek-dialog dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.peek-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.peek-actions a,.peek-actions button{
+  font:600 13px/1 inherit;font-family:inherit;padding:10px 14px;border-radius:7px;cursor:pointer;text-decoration:none;
+  border:1px solid #d6d3d1;background:#fff;color:#1a1a1a;
+}
+.peek-actions .primary{background:#0f2d1e;border-color:#0f2d1e;color:#fff}
+.peek-actions a:hover,.peek-actions button:hover{filter:brightness(.95)}
+.peek-dialog.wide{max-width:min(92vw,760px)}
+.peek-zoom{display:block;width:100%;height:auto;border-radius:8px}
+.peek-cap{margin-top:12px;font-weight:600;color:#1a1a1a}
+.peek-credit{font-size:12px;color:#888}
+.peek-close{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;border:0;background:transparent;cursor:pointer;font-size:20px;line-height:1;color:#666}
+.peek-close:hover{background:#f3f3f3;color:#000}
+.peek-dialog :focus-visible{outline:2px solid #1D9E75;outline-offset:2px}
+
+/* ── tips (data-tip) — hover on a mouse, tap on a touch screen ── */
+.peek-tip{
+  position:fixed;z-index:1900;max-width:18rem;pointer-events:none;
+  background:#1a1a1a;color:#fff;border-radius:6px;padding:7px 10px;
+  font:500 12px/1.4 'Inter',system-ui,sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.25);
+  opacity:0;transition:opacity .1s;
+}
+.peek-tip[data-on]{opacity:1}
+[data-tip]{cursor:help}
+a [data-tip],a[data-tip]{cursor:pointer}
