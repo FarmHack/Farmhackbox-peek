@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Farm Hack Box</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
   <meta name="description" content="Your farm's digital infrastructure — owned by you, connected to a trusted network, resilient by design.">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
@@ -183,6 +183,46 @@
     .peek-sub:hover { color: #000; }
 
     /* Tour — the way on from here */
+
+    /* Tiers — one box, four sizes */
+    .tiers { padding: 16px 24px 64px; max-width: 1150px; margin: 0 auto; scroll-margin-top: 16px; }
+    .tiers-head { text-align: center; margin-bottom: 24px; }
+    .tiers-head h2 { font-size: 26px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
+    .tiers-head p { color: #555; max-width: 620px; margin: 0 auto; font-size: 15px; }
+    .tp { margin: 0 0 20px; }
+    .tp-frame { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid #ccc; box-shadow: 0 8px 28px rgba(0,0,0,.12); background: #111; }
+    .tp-frame img { display: block; width: 100%; height: auto; }
+    .tp-spot { position: absolute; transform: translate(-50%,-50%); width: 34px; height: 34px; border-radius: 50%; background: #000; color: #fff;
+      border: 2px solid #fff; display: grid; place-items: center; font: 700 14px/1 ui-monospace, Menlo, monospace; box-shadow: 0 2px 10px rgba(0,0,0,.45); }
+    .tp-spot::after { content: ''; position: absolute; inset: -7px; border-radius: 50%; border: 2px solid rgba(255,255,255,.75); animation: tp-pulse 2.4s ease-out infinite; }
+    .tp-spot:hover, .tp-spot:focus-visible, .tp-spot.on { background: #fff; color: #000; outline: none; }
+    @keyframes tp-pulse { from { transform: scale(.8); opacity: 1; } to { transform: scale(1.5); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .tp-spot::after { animation: none; opacity: .6; } }
+    .tp figcaption { font-size: 12.5px; color: #666; margin-top: 10px; line-height: 1.55; }
+    .tp-alt { display: inline-block; margin-left: 4px; color: #000; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; background: none; border: 0; font: inherit; padding: 0; }
+    .tier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    @media (max-width: 900px) { .tier-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .tier-grid { grid-template-columns: 1fr; } .tp-spot { width: 28px; height: 28px; font-size: 12px; } }
+    .tier-card { border: 1px solid #ccc; border-radius: 12px; padding: 16px 16px 14px; background: #fff; display: flex; flex-direction: column; gap: 6px; scroll-margin-top: 16px; transition: border-color .15s, box-shadow .15s; }
+    .tier-card.on, .tier-card:target { border: 2px solid #000; padding: 15px 15px 13px; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+    .tier-top { display: flex; align-items: center; gap: 10px; }
+    .tier-n { width: 30px; height: 30px; border-radius: 50%; background: #000; color: #fff; display: grid; place-items: center; font: 700 13px/1 ui-monospace, Menlo, monospace; flex-shrink: 0; }
+    .tier-name { font-weight: 700; font-size: 15px; line-height: 1.25; }
+    .tier-form { font-size: 12px; color: #666; }
+    .tier-desc { font-size: 13px; color: #333; line-height: 1.5; font-style: italic; }
+    .tier-specs { list-style: none; font: 11.5px/1.7 ui-monospace, Menlo, monospace; color: #444; border-top: 1px solid #eee; padding-top: 8px; margin-top: auto; }
+    .tier-count { font-size: 11px; color: #888; letter-spacing: .04em; text-transform: uppercase; font-weight: 600; }
+
+    .fleet-globe { margin-top: 36px; display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr); gap: 28px; align-items: center;
+      --globe-sea:#f1f1f1; --globe-land:#d8d8d8; --globe-land-line:#bdbdbd; --globe-grat:rgba(0,0,0,.06);
+      --ok:#000; --surface:#fff; --brand:#000; --ink:#000; --dim:#555; --faint:#999; --line:#ddd; --line-strong:#c8c8c8; --sb-active:#000; --off:#777; --mod-unmeasured:#999; --fhb-teal:#000; }
+    @media (max-width: 800px) { .fleet-globe { grid-template-columns: 1fr; } }
+    .fg-text h3 { font-size: 22px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
+    .fg-text p { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+    .fg-read { font: 600 13px/1.5 system-ui, sans-serif; color: #000 !important; min-height: 3em; border-left: 3px solid #000; padding-left: 10px; }
+    .fg-host { border: 1px solid #ddd; border-radius: 14px; padding: 6px; background: #fff; }
+    .specs-more { display: block; margin-top: 12px; font-size: 12px; color: #fff; text-decoration: underline; text-underline-offset: 2px; }
+
     .tour { padding: 8px 24px 64px; max-width: 1150px; margin: 0 auto; }
     .tour-head { text-align: center; margin-bottom: 28px; }
     .tour-head h2 { font-size: 26px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
@@ -651,13 +691,14 @@
         </div>
         
         <div id="specsPanel" class="specs-panel">
-          <div class="specs-title mono">Hardware specifications</div>
+          <div class="specs-title mono">Hardware · Tier 1 box</div>
           <div class="spec-row"><span class="label">Compute</span><span class="mono">Raspberry Pi 5</span></div>
           <div class="spec-row"><span class="label">Memory</span><span class="mono">8GB RAM</span></div>
           <div class="spec-row"><span class="label">Storage</span><span class="mono">1TB NVMe SSD</span></div>
           <div class="spec-row"><span class="label">Power</span><span class="mono">5V USB-C / 12V Solar</span></div>
           <div class="spec-row"><span class="label">Network</span><span class="mono">WiFi 6 + GbE</span></div>
           <div class="spec-note"><strong>Solar-ready:</strong> Runs continuously on 50W panel + 12V battery. Perfect for field, barn, or off-grid deployment.</div>
+          <a class="specs-more" href="#tiers">The other three sizes →</a>
         </div>
         
         <div class="network-section">
@@ -754,6 +795,123 @@
       
     </div>
   </section>
+
+  <section class="tiers" id="tiers">
+    <div class="tiers-head">
+      <h2>One box, four sizes</h2>
+      <p>A Farm Hack Box is not one machine. The same software comes in four sizes, from the phone in a steward’s pocket to a regional anchor that holds the archive, and each size has one job.</p>
+    </div>
+    <figure class="tp">
+      <div class="tp-frame">
+        <img id="tp-img" src="assets/img/fleet-tiers.jpg" width="1600" height="720" loading="lazy"
+             alt="The four sizes of Farm Hack Box on one table. A black cube marked with the Ag Knowledge Concordance emblem is the Tier 3 regional anchor. A laptop, underneath everything, is the Tier 2 aggregator. A small Raspberry Pi case is a Tier 1 box. A phone showing the Farm Hack Box app is a Tier 0 capture device. A folding solar panel stands behind them, and the Farm Hack Box field manifesto stands in the middle.">
+        <a class="tp-spot" href="#tier-3" style="left:38.5%;top:38.5%" data-t="3" aria-label="Tier 3: Regional anchor"><span>3</span></a><a class="tp-spot" href="#tier-2" style="left:58.5%;top:57.5%" data-t="2" aria-label="Tier 2: Aggregator"><span>2</span></a><a class="tp-spot" href="#tier-1" style="left:67.5%;top:47%" data-t="1" aria-label="Tier 1: Farm or organisation box"><span>1</span></a><a class="tp-spot" href="#tier-0" style="left:72%;top:77%" data-t="0" aria-label="Tier 0: Capture device"><span>0</span></a>
+      </div>
+      <figcaption>Numbers mark each size; pick one to read about it. Behind them, the folding solar panel a field kit runs on; in the middle, the Farm Hack Box field manifesto.
+        <button type="button" class="tp-alt" id="tp-alt" aria-pressed="false">Show the phone’s lock screen instead</button></figcaption>
+    </figure>
+    <div class="tier-grid">
+      <article class="tier-card" id="tier-3" data-t="3">
+        <div class="tier-top"><span class="tier-n">3</span><div><div class="tier-name">Regional anchor</div><div class="tier-form">Small desktop computer</div></div></div>
+        <p class="tier-desc">Regional anchor: models, media, archive, backup receiver. Rasters and WARC are the only genuinely large classes.</p>
+        <ul class="tier-specs"><li>AMD Ryzen AI Max+ 395 · 64 GB</li><li>Local AI models, media, archive</li><li>Receives sealed backups</li></ul>
+        <div class="tier-count">1 in stewards’ hands</div>
+      </article>
+      <article class="tier-card" id="tier-2" data-t="2">
+        <div class="tier-top"><span class="tier-n">2</span><div><div class="tier-name">Aggregator</div><div class="tier-form">Laptop</div></div></div>
+        <p class="tier-desc">A T2 is a relationship between farms, so it should only exist where that relationship already does.</p>
+        <ul class="tier-specs"><li>Its own battery: rides out outages</li><li>Gathers records from farms that trust it</li><li>Hosts the fleet’s own network</li></ul>
+        <div class="tier-count">1 in stewards’ hands</div>
+      </article>
+      <article class="tier-card" id="tier-1" data-t="1">
+        <div class="tier-top"><span class="tier-n">1</span><div><div class="tier-name">Farm or organisation box</div><div class="tier-form">Raspberry Pi 5 in a small case</div></div></div>
+        <p class="tier-desc">One per organization. Cheap enough to lose, and it is — the replication unit.</p>
+        <ul class="tier-specs"><li>8–16 GB memory · 1 TB NVMe</li><li>5–10 W: runs on a 50 W solar panel</li><li>The whole farm stack, offline</li></ul>
+        <div class="tier-count">13 in stewards’ hands</div>
+      </article>
+      <article class="tier-card" id="tier-0" data-t="0">
+        <div class="tier-top"><span class="tier-n">0</span><div><div class="tier-name">Capture device</div><div class="tier-form">A phone, or a Pi Zero</div></div></div>
+        <p class="tier-desc">Observation happens where people are. Stewards contribute observations, not server administration.</p>
+        <ul class="tier-specs"><li>Field records, photos and sound</li><li>Works offline, syncs to its box</li><li>The Farm Hack Box app</li></ul>
+        <div class="tier-count">2 in stewards’ hands</div>
+      </article>
+    </div>
+
+    <div class="fleet-globe">
+      <div class="fg-text">
+        <h3>Where the boxes are</h3>
+        <p>13 Tier 1 boxes are in stewards’ hands, on four continents, alongside a Tier 2 aggregator and a Tier 3 regional anchor. A box counts because a steward holds it; being offline for a while is part of the design, so this map shows where boxes are, not whether they are on.</p>
+        <p>Drag to turn the globe, and zoom in as far as a country. Positions are rounded to about 50 km, and phones are never shown.</p>
+        <p class="fg-read" id="fg-read" aria-live="polite">Pick a box or a group.</p>
+      </div>
+      <div class="fg-host" id="fg-host"></div>
+    </div>
+  </section>
+
+  <script src="assets/globe/d3-array.min.js"></script>
+  <script src="assets/globe/d3-geo.min.js"></script>
+  <script src="assets/globe/topojson-client.min.js"></script>
+  <script src="assets/globe/world-110m.js"></script>
+  <script src="assets/globe/fh-globe.js"></script>
+  <script>
+  (function () {
+    /* Photo: numbers light their card, cards light their number. */
+    var spots = document.querySelectorAll('.tp-spot'), cards = document.querySelectorAll('.tier-card');
+    function light(t) { spots.forEach(function (s) { s.classList.toggle('on', s.dataset.t === t); });
+                        cards.forEach(function (c) { c.classList.toggle('on', c.dataset.t === t); }); }
+    spots.forEach(function (s) { s.addEventListener('mouseenter', function () { light(s.dataset.t); }); s.addEventListener('focus', function () { light(s.dataset.t); }); });
+    cards.forEach(function (c) { c.addEventListener('mouseenter', function () { light(c.dataset.t); }); });
+    var alt = document.getElementById('tp-alt'), img = document.getElementById('tp-img'), second = false;
+    alt.addEventListener('click', function () {
+      second = !second;
+      img.src = second ? 'assets/img/fleet-tiers-2.jpg' : 'assets/img/fleet-tiers.jpg';
+      alt.textContent = second ? 'Show the Farm Hack Box app instead' : 'Show the phone’s lock screen instead';
+      alt.setAttribute('aria-pressed', String(second));
+    });
+
+    /* Globe: tier-sized pins, no names, no online state. */
+    if (!window.FHGlobe || !window.WORLD_TOPO) return;
+    var PTS = [{"id": "n0", "tier": 1, "lat": 43.0, "lon": -71.0}, {"id": "n1", "tier": 1, "lat": 43.0, "lon": -71.0}, {"id": "n2", "tier": 1, "lat": 43.0, "lon": -71.0}, {"id": "n3", "tier": 1, "lat": 42.5, "lon": -72.5}, {"id": "n4", "tier": 2, "lat": 40.5, "lon": -74.0}, {"id": "n5", "tier": 1, "lat": -34.0, "lon": -64.0}, {"id": "n6", "tier": 1, "lat": 30.0, "lon": 76.5}, {"id": "n7", "tier": 1, "lat": -7.5, "lon": 110.0}, {"id": "n8", "tier": 1, "lat": 42.5, "lon": 12.0}, {"id": "n9", "tier": 1, "lat": 50.5, "lon": 4.5}, {"id": "n10", "tier": 1, "lat": 39.0, "lon": 22.0}, {"id": "n11", "tier": 1, "lat": 34.5, "lon": -106.0}, {"id": "n12", "tier": 1, "lat": 49.0, "lon": 2.5}, {"id": "n13", "tier": 1, "lat": 43.0, "lon": -71.0}, {"id": "n14", "tier": 3, "lat": 43.0, "lon": -71.0}];
+    var NAMES = {3: 'Tier 3 · regional anchor', 2: 'Tier 2 · aggregator', 1: 'Tier 1 box', 0: 'Tier 0'};
+    var countries = topojson.feature(WORLD_TOPO, WORLD_TOPO.objects.countries).features;
+    /* Rounded positions can land just offshore; look a little way around before giving up. */
+    function country(p) {
+      var tries = [[0, 0], [0.5, 0], [-0.5, 0], [0, 0.5], [0, -0.5], [1, 0], [-1, 0], [0, 1], [0, -1]];
+      for (var t = 0; t < tries.length; t++)
+        for (var i = 0; i < countries.length; i++)
+          if (d3.geoContains(countries[i], [p.lon + tries[t][0], p.lat + tries[t][1]])) return countries[i].properties.name;
+      return '';
+    }
+    var points = PTS.map(function (p) {
+      var c = country(p);
+      return { id: p.id, lat: p.lat, lon: p.lon, tier: p.tier, on: true, short: String(p.tier),
+               label: NAMES[p.tier] + (c ? ' · ' + c : ''), name: '', country: c };
+    });
+    var byId = {}; points.forEach(function (p) { byId[p.id] = p; });
+    var read = document.getElementById('fg-read'), sel = null, api = null;
+    function say(ids) {
+      var m = ids.map(function (id) { return byId[id]; });
+      var where = m[0].country || 'this area';
+      if (m.length === 1) { read.textContent = m[0].label; return; }
+      var byTier = {}; m.forEach(function (p) { byTier[p.tier] = (byTier[p.tier] || 0) + 1; });
+      read.textContent = m.length + ' boxes around ' + where + ': ' + Object.keys(byTier).sort().reverse().map(function (t) { return byTier[t] + ' × ' + NAMES[t]; }).join(', ') + '.';
+    }
+    function mount(centre, zoom) {
+      if (api) api.destroy();
+      api = FHGlobe.mount(document.getElementById('fg-host'), {
+        land: topojson.feature(WORLD_TOPO, WORLD_TOPO.objects.land),
+        borders: topojson.mesh(WORLD_TOPO, WORLD_TOPO.objects.countries, function (a, b) { return a !== b; }),
+        countries: countries, points: points, links: [], centre: centre, zoom: zoom, selected: sel, closer: false, status: false,
+        hint: 'Drag to turn · scroll or +/− to zoom to a country',
+        onSelect: function (id) { sel = id; say([id]); var p = byId[id]; mount(view.c, view.z); api.flyTo(p.lon, p.lat, Math.max(view.z, FHGlobe.COUNTRY_ZOOM)); },
+        onOpenFlat: function (ids) { say(ids); },
+        onRotate: function (c) { view = { c: { lon: c.lon, lat: c.lat }, z: c.zoom }; }
+      });
+    }
+    var view = { c: { lon: -30, lat: 28 }, z: 1 };
+    mount(view.c, view.z);
+  })();
+  </script>
 
   <section class="tour" id="tour">
     <div class="tour-head">

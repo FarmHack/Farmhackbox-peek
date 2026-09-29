@@ -1,6 +1,6 @@
 # Farm Hack Box — a peek inside
 
-A small, self-contained static site: what a Farm Hack Box is, what it carries, and what it runs. Five pages that link to each other, with no server, build step or network calls needed. It works on GitHub Pages or opened straight from a checkout.
+A small, self-contained static site: what a Farm Hack Box is, what it carries, and what it runs. Six pages that link to each other, with no server, build step or network calls needed: fonts, photos and the globe's map data all travel inside the folder. It works opened straight from a disk, served by a Farm Hack Box, or published on GitHub Pages.
 
 | # | Page | What it is | Source |
 |---|------|------------|--------|
@@ -12,6 +12,20 @@ A small, self-contained static site: what a Farm Hack Box is, what it carries, a
 | 06 | `not-a-box-store.html` | The Open Box Network the box belongs to | `dornawcox.github.io/TalktotheInterviewer/not-a-box-store-v2.html` |
 
 **`cgo-standalone.html`** is the same CGO page as a single self-contained file — stylesheets, script and artwork inlined, tour bar suppressed, no links to sibling pages. Drop it into any repo, or open it from a disk with nothing beside it.
+
+## Running it locally
+
+- **From a disk or USB stick:** open `index.html` in any browser. Nothing else is needed, and it works with no network.
+- **On a Farm Hack Box:** the box serves it at `/peek/` (for example `https://farmhackbox-04.local/peek/`).
+  To install or update it on a box, copy this folder to `/srv/farmhack/apps/farmhack-box-peek/` and link
+  `/srv/farmhack/web/peek` to it; `package.sh` in the build repo does both.
+- **From a laptop, for others on the same network:** `python3 -m http.server 8000` in this folder, then open
+  `http://<your-address>:8000/`.
+
+Links to outside sites (farmhack.org, the forum) are ordinary links: they need a network only when someone follows one.
+One page makes one optional request of its own: *Not a Box Store* asks the Farm Hack commons registry
+(`git.farmhack.community`) for live counts, gives up after 4 seconds, and shows fixed numbers instead.
+Everything else works with the network unplugged.
 
 ## Publishing this on GitHub
 
@@ -45,6 +59,8 @@ Links to outside sites (farmhack.org, fao.org and others) behave normally. Tree 
 - The mangrove silhouette behind the tree figure (Noun Project #6416832) is kept. Its licence was unconfirmed on the box; the operator holds a **royalty-free licence**, and the embedded path is byte-identical to that licensed download (verified 2026-09-17), so the figure's caption now says so.
 - **Removed:** on-box file paths, a private network hostname, and the internal notes carried in the agroecology data.
 - Small responsive fixes (header navigation and the canon layout on phones), and a fix so taps on trunk cells don't land on the record-layer line.
+- **Added (2026-09-28):** "One box, four sizes" on the home page — a photo of the four tiers with numbered spots, a card per tier, and a globe of where the boxes are. The tier wording and counts come from the fleet topology, not retyped. The globe shows no box names and no online state, rounds positions to about 50 km, and never shows phones. The POS page says where the POS runs; the agroecology page links to the four sizes.
+- Google Fonts replaced by local copies in `assets/fonts/`, so no request leaves the site.
 
 ## Attribution
 
@@ -54,3 +70,6 @@ Links to outside sites (farmhack.org, fao.org and others) behave normally. Tree 
 - CGO card artwork: **Jenni**, created for the CGO collateral card and used here as intended. Shown as printed for SVN's Global Gathering 2026.
 - Mangrove silhouette: **kareemovic2000**, The Noun Project #6416832, royalty-free licence held by the operator. Attribution is not required under that licence; it is given anyway, and the creator's name is not recorded in the file itself.
 - The ground profile on the agroecology page is **as of July 2026**. Its own caveat applies: confirm organizational arrangements before citing it.
+- Tier photographs: Farm Hack, 2026.
+- Globe: map data from Natural Earth (public domain), via world-atlas 2.0.2 (ISC); drawn with d3-geo, d3-array and topojson-client (ISC). `assets/globe/fh-globe.js` is Farm Hack's own.
+- Fonts: Inter (The Inter Project Authors) and Space Grotesk (The Space Grotesk Project Authors), SIL Open Font License 1.1, via Fontsource. Licence texts are in `assets/fonts/`.

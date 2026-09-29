@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Farm Hack POS — Point of Sale for Farm Stores</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
 
 <!-- SVG Icon Sprite (single stroke, single color) -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -241,6 +240,11 @@ h2{font-size:clamp(26px,3.5vw,40px);font-weight:700;line-height:1.1;letter-spaci
 
 /* ── HARDWARE ── */
 .hardware{background:#fff}
+.hw-tiers{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:center;margin-top:28px;border:1px solid #e5e5e5;border-radius:10px;padding:16px}
+.hw-tiers img{display:block;width:100%;height:auto;border-radius:6px}
+.hw-tiers p{font-size:14px;color:#444;line-height:1.6}
+.hw-tiers a.more{display:inline-block;margin-top:10px;font-weight:600;color:#163d28;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:700px){.hw-tiers{grid-template-columns:1fr}}
 .hw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
 .hw-card{border:1px solid #e5e5e5;border-radius:8px;padding:20px 18px}
 .hw-card svg{width:18px;height:18px;stroke:#000;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:12px}
@@ -628,6 +632,15 @@ footer{background:#0f2d1e;color:#fff;padding:48px 24px}
         <div class="hw-model">Any USB HID Scanner</div>
         <div class="hw-desc">Appears as a keyboard to the browser. Zero configuration.</div>
         <div class="hw-pill">✓ Universal</div>
+      </div>
+    </div>
+    <div class="hw-tiers">
+      <a href="index.html#tier-1"><img src="assets/img/fleet-tiers.jpg" width="1600" height="720" loading="lazy"
+         alt="The four sizes of Farm Hack Box on one table; the POS runs on the small Raspberry Pi case right of centre."></a>
+      <div>
+        <div class="section-tag">Where it runs</div>
+        <p>The POS runs on a Tier 1 box: the Raspberry Pi in the small case, right of centre in this photo. The same box keeps the farm’s other records, so the till and the ledger are one machine that stays on the farm.</p>
+        <a class="more" href="index.html#tiers">The four sizes of Farm Hack Box →</a>
       </div>
     </div>
   </div>
